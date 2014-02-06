@@ -1,0 +1,26 @@
+{
+  "name": "rutil",
+  "version": "0.1.0",
+  "description": "Random utilities",
+  "main": "rutil.js",
+  "dependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-cli": "~0.1.13",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-watch": "~0.5.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miguelmota/rutil.git"
+  },
+  "author": "Miguel Mota",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miguelmota/rutil/issues"
+  }
+}
