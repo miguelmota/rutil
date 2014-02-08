@@ -2,11 +2,15 @@
 
 Random utilities
 
-Available via [Bowe:N(http://bower.io/)
+# Install
+
+Available via [Bower](http://bower.io/)
 
 ```bash
 bower install rutil
 ```
+
+# Utilities
 
 ### isObject
 
