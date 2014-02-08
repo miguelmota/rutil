@@ -44,12 +44,20 @@ module.exports = function (grunt) {
 				],
         tasks: ['compile_scripts']
       }
-    }
+    },
+		copy: {
+			test: {
+				src: 'rutil.js',
+				dest: 'test/src/rutil.js',
+			}
+		}
   });
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.registerTask('jshint', ['jshint']);
   grunt.registerTask('compile_scripts', ['uglify:dist']);
+  grunt.registerTask('test', ['copy:test']);
   grunt.registerTask('default', ['watch:scripts']);
 };

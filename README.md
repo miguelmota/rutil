@@ -42,6 +42,17 @@ var url = 'http://example.com/pixel-tracker?id=1234567890';
 rutil.createPixel(url);
 ```
 
+### getParams
+	
+```javascript
+// http://example.com/?foo=bar&baz=qux
+
+var params = rutil.getParams(); // {foo: "bar", baz: "qux"} 
+
+var url = 'http://example.com/?foo=bar&baz=qux';
+var params = rutil.getParms(url)
+```
+
 # Building
 
 ```
