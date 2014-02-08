@@ -55,12 +55,14 @@ rutil.createPixel(url);
 ### getParams
 	
 ```javascript
-// http://example.com/?foo=bar&baz=qux
+// current url: http://example.com/?foo=bar&baz=qux
 
 var params = rutil.getParams(); // {foo: "bar", baz: "qux"} 
+```
 
+```javascript
 var url = 'http://example.com/?foo=bar&baz=qux';
-var params = rutil.getParms(url)
+var params = rutil.getParms(url) // {foo: "bar", baz: "qux"}
 ```
 
 # Test
