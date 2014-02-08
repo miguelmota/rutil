@@ -46,18 +46,27 @@ module.exports = function (grunt) {
       }
     },
 		copy: {
-			test: {
+			rtoj: {
 				src: 'rutil.js',
 				dest: 'test/src/rutil.js',
 			}
+		},
+		jasmine: {
+			src: 'test/src/*.js',
+			options: {
+				specs: 'test/spec/*Spec.js',
+				helpers: 'test/spec/*Helper.js'
+			}
 		}
   });
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.registerTask('jshint', ['jshint']);
   grunt.registerTask('compile_scripts', ['uglify:dist']);
-  grunt.registerTask('test', ['copy:test']);
+  grunt.registerTask('build', ['copy:rtoj', 'jasmine', 'uglify:dist']);
+  grunt.registerTask('test', ['copy:rtoj', 'jasmine']);
   grunt.registerTask('default', ['watch:scripts']);
 };

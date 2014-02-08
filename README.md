@@ -2,6 +2,12 @@
 
 Random utilities
 
+Available via [Bowe:N(http://bower.io/)
+
+```bash
+bower install rutil
+```
+
 ### isObject
 
 ```javascript
@@ -53,10 +59,18 @@ var url = 'http://example.com/?foo=bar&baz=qux';
 var params = rutil.getParms(url)
 ```
 
-# Building
+# Test
+
+Using [Jasmine](http://pivotal.github.io/jasmine/) for testing
 
 ```
-grunt
+grunt test
+```
+
+# Build
+
+```
+grunt build
 ```
 
 # License
