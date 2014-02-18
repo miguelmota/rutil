@@ -48,11 +48,11 @@
 		postImage.style.width = '0px';
 		postImage.style.height = '0px';
 		postImage.src = url;
-		postImage.onload = function() {       
-			postImage.src = '';                 
+		postImage.onload = function() {
+			postImage.src = '';
 			cb && cb(null, url);
-		};                                    
-		postImage.onerror = function(e) {     
+		};
+		postImage.onerror = function(e) {
 			cb && cb(e, url);
 		};
 		document.body.appendChild(postImage);
@@ -79,11 +79,33 @@
 		return params;
 	};
 
+	/**
+	 * http://stackoverflow.com/a/2117523
+	 */
+	var generateUUID = function() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+			return v.toString(16);
+		});
+	};
+
+	var generateRandomString = function(length) {
+		var text = '';
+		length = length || 32;
+		var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		for( var i = 0; i < length; i++) {
+			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		}
+		return text;
+	};
+
 	rutil.isArray = isArray;
 	rutil.isObject = isObject;
 	rutil.serialize = serialize;
 	rutil.createPixel = createPixel;
 	rutil.getParams = getParams;
+	rutil.generateUUID = generateUUID;
+	rutil.generateRandomString = generateRandomString;
 
 	global.rutil = global.rutil || rutil;
 

@@ -66,6 +66,19 @@ var url = 'http://example.com/?foo=bar&baz=qux';
 var params = rutil.getParms(url) // {foo: "bar", baz: "qux"}
 ```
 
+### generateUUID
+
+```javascript
+var uuid = rutil.generateUUID(); // 049128ed-b16c-4689-90d2-e910860d2797
+```
+
+### generateRandomString
+
+```javascript
+var randomString = rutil.generateRandomString(); // Ne46OxeEbWeDdFSDmwbOq4kfGkoKlMSh
+var randomString = rutil.generateRandomString(16); // mOPJBXXc9MR7nQf8 
+```
+
 # Test
 
 Using [Jasmine](http://pivotal.github.io/jasmine/) for testing
