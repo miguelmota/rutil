@@ -25,7 +25,7 @@ describe("Rutil", function() {
 
 	});
 
-	describe("generateUUID", function() {
+	xdescribe("generateUUID", function() {
 		it("should be be able to generate a UUID", function() {
 			var uuid = rutil.generateUUID();
 			console.log('uuid:', uuid);
@@ -36,12 +36,21 @@ describe("Rutil", function() {
 	});
 
 	xdescribe("generateRandomSring", function() {
-		it("should be be able to generate a random string", function() {
-			var randomString = rutil.generateRandomString(16);
+		xit("should be be able to generate a random 32 char string", function() {
+			var randomString = rutil.generateRandomString();
 			console.log('Random string:', randomString);
 
 			expect(randomString).not.toBe(null);
-			expect(randomString).toMatch(/\w{16,32}/);
+			expect(randomString).toMatch(/\w{32}/);
+		});
+
+		it("should be be able to generate a random 6 char number string", function() {
+			var randomString = rutil.generateRandomString(6, '0123456789');
+			console.log('Random string:', randomString);
+
+			expect(randomString).not.toBe(null);
+			//expect(randomString).toEqual(jasmine.any(Number));
+			expect(randomString).toMatch(/\w{6}/);
 		});
 	});
 });

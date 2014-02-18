@@ -76,7 +76,10 @@ var uuid = rutil.generateUUID(); // 049128ed-b16c-4689-90d2-e910860d2797
 
 ```javascript
 var randomString = rutil.generateRandomString(); // Ne46OxeEbWeDdFSDmwbOq4kfGkoKlMSh
+
 var randomString = rutil.generateRandomString(16); // mOPJBXXc9MR7nQf8 
+
+var randomString = rutil.generateRandomString(6, '0123456789'); // 388048
 ```
 
 # Test

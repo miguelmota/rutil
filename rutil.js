@@ -89,14 +89,15 @@
 		});
 	};
 
-	var generateRandomString = function(length) {
-		var text = '';
+	var generateRandomString = function(length, chars) {
+		var str = [],
+				i;
 		length = length || 32;
-		var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		for( var i = 0; i < length; i++) {
-			text += possible.charAt(Math.floor(Math.random() * possible.length));
+		chars = chars || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		for (i = 0; i < length; i++) {
+			str.push(chars.charAt(Math.floor(Math.random() * chars.length)));
 		}
-		return text;
+		return str.join('');
 	};
 
 	rutil.isArray = isArray;
