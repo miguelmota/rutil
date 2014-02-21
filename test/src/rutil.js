@@ -73,9 +73,7 @@
 					params[tmparr[0]] = tmparr[1];
 				}
 			}
-		} catch(err) {
-			console.error(err);
-		}
+		} catch(err) {}
 		return params;
 	};
 
@@ -100,6 +98,95 @@
 		return str.join('');
 	};
 
+	var hexToRgb = function(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+	};
+
+	/**
+	 * Returns an array of dates between the two dates
+	 */
+	var getDatesInbetween = function(startDate, endDate) {
+		var dates = [],
+				currentDate = startDate,
+				addDays = function(days) {
+					var date = new Date(this.valueOf());
+					date.setDate(date.getDate() + days);
+					return date;
+				};
+		while (currentDate <= endDate) {
+			dates.push(currentDate);
+			currentDate = addDays.call(currentDate, 1);
+		}
+		return dates;
+	};
+
+	var isMobileDevice = function() {
+		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+	};
+
+	var sleep = function(ms) {
+		var startTime = new Date().getTime();
+		while (new Date().getTime() < startTime + ms);
+	};
+
+	var parseHashtag = function(string, url) {
+		return string.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
+			var tmpUrl = url;
+			var tag = t.replace('#','%23');
+			tmpUrl = tmpUrl.replace(/\{\{\w+\}\}/g, tag);
+			return t.link(tmpUrl);
+		});
+	};
+
+	var parseUsername = function(string, url) {
+		return string.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
+			var tmpUrl = url;
+			var username = u.replace('@','');
+			tmpUrl = tmpUrl.replace(/\{\{\w+\}\}/g, username);
+			return u.link(tmpUrl);
+		});
+	};
+
+	var parseUrl = function(string) {
+		return string.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(url) {
+			return url.link(url);
+		});
+	};
+
+	var stripTags = function(string) {
+		return (string ? string.replace(/(<([^>]+)>)/ig, '') : string);
+	};
+
+	var formatPhone = function(number) {
+		return (number ? number.toString().replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3') : number);
+	};
+
+	var validateEmail = function(email) {
+		var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return (email ? regex.test(email) : false);
+  };
+
+  var validateMinAge = function(birthDate, minAge) {
+    var tmpDate = new Date(birthDate.getFullYear() + minAge, birthDate.getMonth(), birthDate.getDate()).setMonth(birthDate.getMonth() - 1);
+    return (tmpDate <= new Date());
+  };
+
+	var validateZip = function(zip) {
+		var regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+		return regex.test(zip);
+	};
+
 	rutil.isArray = isArray;
 	rutil.isObject = isObject;
 	rutil.serialize = serialize;
@@ -107,6 +194,20 @@
 	rutil.getParams = getParams;
 	rutil.generateUUID = generateUUID;
 	rutil.generateRandomString = generateRandomString;
+	rutil.hexToRgb = hexToRgb;
+	rutil.getDatesInbetween = getDatesInbetween;
+	rutil.isMobileDevice = isMobileDevice;
+	rutil.sleep = sleep;
+	rutil.parseHashtag = parseHashtag;
+	rutil.parseUsername = parseUsername;
+	rutil.parseUrl = parseUrl;
+	rutil.stripTags = stripTags;
+	rutil.formatPhone = formatPhone;
+	rutil.validate = {
+		email: validateEmail,
+		minAge: validateMinAge,
+		zip: validateZip
+	};
 
 	global.rutil = global.rutil || rutil;
 

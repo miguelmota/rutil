@@ -40,7 +40,8 @@ module.exports = function (grunt) {
     watch: {
       scripts: {
         files: [
-          'rutil.js'
+          'rutil.js',
+					'test/spec/*.js'
 				],
         tasks: ['compile_scripts']
       }
@@ -65,7 +66,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.registerTask('jshint', ['jshint']);
-  grunt.registerTask('compile_scripts', ['uglify:dist']);
+  grunt.registerTask('compile_scripts', ['uglify:dist', 'copy:rtoj', 'jasmine']);
   grunt.registerTask('build', ['copy:rtoj', 'jasmine', 'uglify:dist']);
   grunt.registerTask('test', ['copy:rtoj', 'jasmine']);
   grunt.registerTask('default', ['watch:scripts']);
