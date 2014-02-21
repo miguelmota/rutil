@@ -187,6 +187,13 @@ var zip = '12345-2453';
 var isValidZip = rutil.validate.zip(zip); // true
 ```
 
+### validate.minAge
+
+```javascript
+var birthDate = new Date(1998, 02, 20);
+var isValidAge = rutil.validate.minAge(birthDate, 18); // true
+```
+
 ### addCommas
 
 ```javascript
