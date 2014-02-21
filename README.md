@@ -86,17 +86,17 @@ var params = rutil.getParms(url) // {foo: "bar", baz: "qux"}
 ### generateUUID
 
 ```javascript
-var uuid = rutil.generateUUID(); // 049128ed-b16c-4689-90d2-e910860d2797
+rutil.generateUUID(); // 049128ed-b16c-4689-90d2-e910860d2797
 ```
 
 ### generateRandomString
 
 ```javascript
-var randomString = rutil.generateRandomString(); // Ne46OxeEbWeDdFSDmwbOq4kfGkoKlMSh
+rutil.generateRandomString(); // Ne46OxeEbWeDdFSDmwbOq4kfGkoKlMSh
 
-var randomString = rutil.generateRandomString(16); // mOPJBXXc9MR7nQf8 
+rutil.generateRandomString(16); // mOPJBXXc9MR7nQf8 
 
-var randomString = rutil.generateRandomString(6, '0123456789'); // 388048
+rutil.generateRandomString(6, '0123456789'); // 388048
 ```
 
 ### hexToRgb
@@ -117,7 +117,7 @@ var until = new Date(2013,11,25);
 
 var dates = rutil.getDatesInbetween(from, until);                                                                                                           
 dates.forEach(function(date) {
-  date // Fri Nov 22 2013 00:00:00 GMT-0800 (PST)
+  date // obj: Fri Nov 22 2013 00:00:00 GMT-0800 (PST)
 });
 ```
 
@@ -126,9 +126,9 @@ dates.forEach(function(date) {
 ```javascript
 var string = '#foo #bar';
 
-var stringWithLinks = rutil.parseHashtag(string, 'http://twitter.com/search?q={{tag}}');
+var linkifiedString = rutil.parseHashtag(string, 'http://twitter.com/search?q={{tag}}');
 
-stringWithLinks // <a href="http://twitter.com/search?q=%23foo">#foo</a> <a href="http://twitter.com/search?q=%23bar">#bar</a>
+linkifiedString // <a href="http://twitter.com/search?q=%23foo">#foo</a> <a href="http://twitter.com/search?q=%23bar">#bar</a>
 ```
 
 ### parseUsername
@@ -136,9 +136,9 @@ stringWithLinks // <a href="http://twitter.com/search?q=%23foo">#foo</a> <a href
 ```javascript
 var string = '@foo @bar';
 
-var stringWithLinks = rutil.parseUsername(string, 'http://twitter.com/{{username}}');
+var linkifiedString = rutil.parseUsername(string, 'http://twitter.com/{{username}}');
 
-stringWithLinks // <a href="http://twitter.com/foo">@foo</a> <a href="http://twitter.com/bar">@bar</a>
+linkifiedString // <a href="http://twitter.com/foo">@foo</a> <a href="http://twitter.com/bar">@bar</a>
 ```
 
 ### parseUrl
@@ -146,9 +146,9 @@ stringWithLinks // <a href="http://twitter.com/foo">@foo</a> <a href="http://twi
 ```javascript
 var string = 'http://example.com/ http://github.com/';
 
-var stringWithLinks = rutil.parseUrl(string);
+var linkifiedString = rutil.parseUrl(string);
 
-stringWithLinks // <a href="http://example.com/">http://example.com/</a> <a href="http://github.com/">http://github.com/</a>
+linkifiedString // <a href="http://example.com/">http://example.com/</a> <a href="http://github.com/">http://github.com/</a>
 ```
 
 ### stripTags
@@ -156,7 +156,7 @@ stringWithLinks // <a href="http://example.com/">http://example.com/</a> <a href
 ```javascript
 var htmlString = '<p><strong>foo</strong></p>';
 
-var text = rutil.stripTags(string);
+var text = rutil.stripTags(htmlString);
 
 text // foo
 ```
@@ -174,24 +174,24 @@ formattedPhone // (123) 456-7890
 
 ```javascript
 var email = 'foo.bar-5@qux.com';
-var isValidEmail = rutil.validate.email(email); // true
+rutil.validate.email(email); // true
 ```
 
 ### validate.zip
 
 ```javascript
 var zip = 12345;
-var isValidZip = rutil.validate.zip(zip); // true
+rutil.validate.zip(zip); // true
 
 var zip = '12345-2453';
-var isValidZip = rutil.validate.zip(zip); // true
+rutil.validate.zip(zip); // true
 ```
 
 ### validate.minAge
 
 ```javascript
 var birthDate = new Date(1998, 02, 20);
-var isValidAge = rutil.validate.minAge(birthDate, 18); // true
+rutil.validate.minAge(birthDate, 18); // true
 ```
 
 ### addCommas
@@ -206,9 +206,9 @@ numberWithCommas // 1,234,567,890.1234
 ### isMobileDevice
 
 ```javascript
-var isMobileDevice = rutil.isMobileDevice(); // bool
+rutil.isMobileDevice(); // bool
 
-var isMobileDevice = rutil.isMobileDevice('ios'); // bool
+rutil.isMobileDevice('ios'); // bool
 ```
 
 ```
@@ -218,8 +218,8 @@ options: 'iphone', 'ipad', 'ios', 'ios7', 'android', 'blackberry', 'ie', 'opera'
 ### toBool
 
 ```javascript
-var str = 'true';
-var bool = rutil.toBool(str); // true
+var string = 'true';
+rutil.toBool(string); // true
 ```
 
 ```
