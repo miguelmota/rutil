@@ -49,7 +49,7 @@ rutil.serialize(obj); // uid=123&t=foo&t=bar&o%5Bbaz%5D=qux&q=foo%20bar
 ```javascript
 var url = 'http://example.com/pixel-tracker?id=1234567890';
 
-rutil.createPixel(url);
+rutil.createPixel(url); // appends image tag to body
 ```
 
 ### getParams
