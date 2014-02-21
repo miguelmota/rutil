@@ -28,6 +28,23 @@ rutil.isObject([], true); // true
 rutil.isArray([]); // true
 ```
 
+### merge
+
+```javascript
+var obj1 = {
+	foo: 'bar',
+	baz: 1234
+};
+
+var obj2 = {
+	foo: 'qux'				
+};
+
+var obj3 = rutil.merge(obj1, obj2);
+
+obj3 // {foo: "qux", baz: 1234} 
+```
+
 ### serialize
 
 ```javascript
@@ -170,10 +187,36 @@ var zip = '12345-2453';
 var isValidZip = rutil.validate.zip(zip); // true
 ```
 
+### addCommas
+
+```javascript
+var number = 1234567890.1234;
+var numberWithCommas = rutil.addCommas(number);
+
+numberWithCommas // 1,234,567,890.1234
+```
+
 ### isMobileDevice
 
 ```javascript
 var isMobileDevice = rutil.isMobileDevice(); // bool
+
+var isMobileDevice = rutil.isMobileDevice('ios'); // bool
+```
+
+```
+options: 'iphone', 'ipad', 'ios', 'ios7', 'android', 'blackberry', 'ie', 'opera', 'webos'
+```
+
+### toBool
+
+```javascript
+var str = 'true';
+var bool = rutil.toBool(str); // true
+```
+
+```
+options: 'true', 'yes', 'on', '1'
 ```
 
 ### sleep

@@ -179,7 +179,7 @@ describe("Rutil", function() {
 
 	});
 
-	describe("validate.zip", function() {
+	xdescribe("validate.zip", function() {
 
 		it("should validate zip", function() {
 			var zip = '12345-2453';
@@ -187,6 +187,75 @@ describe("Rutil", function() {
 			console.log(isValidZip);
 
 			expect(isValidZip).toBeTruthy();
+		});
+
+	});
+
+	xdescribe("addCommas", function() {
+
+		it("should add commas", function() {
+			var number = 1234567890.1234;
+			var numberWithCommas = rutil.addCommas(number);
+			console.log(numberWithCommas);
+
+			expect(numberWithCommas).toEqual('1,234,567,890.1234');
+		});
+
+	});
+
+	xdescribe("merge", function() {
+
+		it("should merge two objects", function() {
+			var obj1 = {
+				foo: 'bar',
+				baz: 1234
+			};
+
+			var obj2 = {
+				foo: 'qux'				
+			};
+
+			var obj3 = rutil.merge(obj1, obj2);
+
+			console.log(obj3);
+
+			expect(obj3).toEqual({foo: 'qux', baz: 1234});
+		});
+
+	});
+
+	xdescribe("isMobileDevice", function() {
+
+		xit("should check if is mobile device", function() {
+			var isMobileDevice = rutil.isMobileDevice();
+			console.log(isMobileDevice);
+			expect(isMobileDevice).toMatch(/(true|false)/);
+		});
+
+		xit("should check if is mobile device ios", function() {
+			var isMobileDevice = rutil.isMobileDevice('ios');
+			expect(isMobileDevice).toBeTruthy();
+		});
+
+		it("should check if is mobile device ios7", function() {
+			var isMobileDevice = rutil.isMobileDevice('ios7');
+			expect(isMobileDevice).toBeTruthy();
+		});
+
+		xit("should check if is mobile device android", function() {
+			var isMobileDevice = rutil.isMobileDevice('android');
+			expect(isMobileDevice).toBeTruthy();
+		});
+
+	});
+
+	xdescribe("toBool", function() {
+
+		it("should return a boolean", function() {
+			var str = '1';
+			var bool = rutil.toBool(str);
+			console.log(bool);
+			expect(bool).toBeTruthy();
 		});
 
 	});

@@ -16,6 +16,18 @@
 		return isObject;
 	};
 
+	var merge = function(obj1, obj2){
+		var obj3 = {},
+				attrname;
+		for (attrname in obj1) {
+			obj3[attrname] = obj1[attrname];
+		}
+		for (attrname in obj2) {
+			obj3[attrname] = obj2[attrname];
+		}
+		return obj3;
+	};
+
 	var serialize = function(obj, prefix) {
 		var s = function(obj, prefix) {
 			var str = [];
@@ -131,8 +143,42 @@
 		return dates;
 	};
 
-	var isMobileDevice = function() {
-		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+	var isMobileDevice = function(device) {
+		device = device || '';
+		var regex = '';
+		switch(device.toLowerCase()) {
+			case 'android':
+					regex = new RegExp('Android', 'i');
+				break;
+			case 'webos':
+					regex = new RegExp('webOS', 'i');
+				break;
+			case 'iphone':
+					regex = new RegExp('iPhone', 'i');
+				break;
+			case 'ipad':
+					regex = new RegExp('iPad', 'i');
+				break;
+			case 'ios':
+					regex = new RegExp('(iPhone|iPad)', 'i');
+				break;
+			case 'ios7':
+					regex = new RegExp('(iPad|iPhone);.*CPU.*OS 7_\\d', 'i');
+				break;
+			case 'blackberry':
+					regex = new RegExp('BlackBerry', 'i');
+				break;
+			case 'ie':
+					regex = new RegExp('IEMobile', 'i');
+				break;
+			case 'opera':
+					regex = new RegExp('Opera Mini', 'i');
+				break;
+			default:
+					regex = new RegExp('(Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini)', 'i');
+				break;
+		}
+		return regex.test(navigator.userAgent);
 	};
 
 	var sleep = function(ms) {
@@ -140,8 +186,8 @@
 		while (new Date().getTime() < startTime + ms);
 	};
 
-	var parseHashtag = function(string, url) {
-		return string.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
+	var parseHashtag = function(str, url) {
+		return str.replace(/[#]+[A-Za-z0-9-_]+/g, function(t) {
 			var tmpUrl = url;
 			var tag = t.replace('#','%23');
 			tmpUrl = tmpUrl.replace(/\{\{\w+\}\}/g, tag);
@@ -149,8 +195,8 @@
 		});
 	};
 
-	var parseUsername = function(string, url) {
-		return string.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
+	var parseUsername = function(str, url) {
+		return str.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
 			var tmpUrl = url;
 			var username = u.replace('@','');
 			tmpUrl = tmpUrl.replace(/\{\{\w+\}\}/g, username);
@@ -158,14 +204,14 @@
 		});
 	};
 
-	var parseUrl = function(string) {
-		return string.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(url) {
+	var parseUrl = function(str) {
+		return str.replace(/[A-Za-z]+:\/\/[A-Za-z0-9-_]+\.[A-Za-z0-9-_:%&~\?\/.=]+/g, function(url) {
 			return url.link(url);
 		});
 	};
 
-	var stripTags = function(string) {
-		return (string ? string.replace(/(<([^>]+)>)/ig, '') : string);
+	var stripTags = function(str) {
+		return (str? str.replace(/(<([^>]+)>)/ig, '') : str);
 	};
 
 	var formatPhone = function(number) {
@@ -187,8 +233,39 @@
 		return regex.test(zip);
 	};
 
+	var addCommas = function(n) {
+	   if (!n) return n;
+	   var parts = n.toString().split('.');
+	   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	   return parts.join('.');
+	};
+
+	var toBool = function(str) {
+		switch((str ? str.toLowerCase() : '')) {
+			case 'true': case 'yes': case 'on': case '1': return true;
+			default: return false;
+		 }
+	};
+
+ 	var prettyDate = function(date) {
+		date.setMonth(date.getMonth() - 1);
+  	var dayNames = [
+			'Sunday', 'Monday', 'Tuesday',
+			'Wednesday', 'Thursday', 'Friday',
+			'Saturday'
+		];
+		var monthNames = [
+			'January', 'February', 'March',
+			'April', 'May', 'June',
+			'July', 'August', 'September',
+			'October', 'November', 'December'
+   ];
+   return dayNames[date.getDay()] + ' ' + monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+	};
+
 	rutil.isArray = isArray;
 	rutil.isObject = isObject;
+	rutil.merge = merge;
 	rutil.serialize = serialize;
 	rutil.createPixel = createPixel;
 	rutil.getParams = getParams;
@@ -208,6 +285,9 @@
 		minAge: validateMinAge,
 		zip: validateZip
 	};
+	rutil.addCommas = addCommas;
+	rutil.prettyDate = prettyDate;
+	rutil.toBool = toBool;
 
 	global.rutil = global.rutil || rutil;
 
