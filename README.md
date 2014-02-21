@@ -37,12 +37,12 @@ var obj1 = {
 };
 
 var obj2 = {
-	foo: 'qux'				
+	foo: 'qux'
 };
 
 var obj3 = rutil.merge(obj1, obj2);
 
-obj3 // {foo: "qux", baz: 1234} 
+obj3 // {foo: "qux", baz: 1234}
 ```
 
 ### serialize
@@ -52,17 +52,17 @@ var obj = {
 	uid: 123,
 	t: [
 		'foo',
-		'bar'	
+		'bar'
 	],
 	o: {baz: 'qux'},
-	q: 'foo bar'	
+	q: 'foo bar'
 };
 
 rutil.serialize(obj); // uid=123&t=foo&t=bar&o%5Bbaz%5D=qux&q=foo%20bar
 ```
 
 ### createPixel
-	
+
 ```javascript
 var url = 'http://example.com/pixel-tracker?id=1234567890';
 
@@ -70,17 +70,17 @@ rutil.createPixel(url); // appends image tag to body
 ```
 
 ### getParams
-	
+
 ```javascript
 // current url: http://example.com/?foo=bar&baz=qux
 
-var params = rutil.getParams(); // {foo: "bar", baz: "qux"} 
+rutil.getParams(); // {foo: "bar", baz: "qux"}
 ```
 
 ```javascript
 var url = 'http://example.com/?foo=bar&baz=qux';
 
-var params = rutil.getParms(url) // {foo: "bar", baz: "qux"}
+rutil.getParms(url) // {foo: "bar", baz: "qux"}
 ```
 
 ### generateUUID
@@ -94,7 +94,7 @@ rutil.generateUUID(); // 049128ed-b16c-4689-90d2-e910860d2797
 ```javascript
 rutil.generateRandomString(); // Ne46OxeEbWeDdFSDmwbOq4kfGkoKlMSh
 
-rutil.generateRandomString(16); // mOPJBXXc9MR7nQf8 
+rutil.generateRandomString(16); // mOPJBXXc9MR7nQf8
 
 rutil.generateRandomString(6, '0123456789'); // 388048
 ```
@@ -115,7 +115,8 @@ rgb.g // 119
 var from = new Date(2013,10,22);
 var until = new Date(2013,11,25);
 
-var dates = rutil.getDatesInbetween(from, until);                                                                                                           
+var dates = rutil.getDatesInbetween(from, until);
+
 dates.forEach(function(date) {
   date // obj: Fri Nov 22 2013 00:00:00 GMT-0800 (PST)
 });
@@ -165,15 +166,17 @@ text // foo
 
 ```javascript
 var phone = 1234567890;
+
 var formattedPhone = rutil.formatPhone(phone);
 
-formattedPhone // (123) 456-7890 
+formattedPhone // (123) 456-7890
 ```
 
 ### validate.email
 
 ```javascript
 var email = 'foo.bar-5@qux.com';
+
 rutil.validate.email(email); // true
 ```
 
@@ -181,9 +184,13 @@ rutil.validate.email(email); // true
 
 ```javascript
 var zip = 12345;
-rutil.validate.zip(zip); // true
 
+rutil.validate.zip(zip); // true
+```
+
+```javascript
 var zip = '12345-2453';
+
 rutil.validate.zip(zip); // true
 ```
 
@@ -191,6 +198,7 @@ rutil.validate.zip(zip); // true
 
 ```javascript
 var birthDate = new Date(1998, 02, 20);
+
 rutil.validate.minAge(birthDate, 18); // true
 ```
 
@@ -198,6 +206,7 @@ rutil.validate.minAge(birthDate, 18); // true
 
 ```javascript
 var number = 1234567890.1234;
+
 var numberWithCommas = rutil.addCommas(number);
 
 numberWithCommas // 1,234,567,890.1234
@@ -219,6 +228,7 @@ options: 'iphone', 'ipad', 'ios', 'ios7', 'android', 'blackberry', 'ie', 'opera'
 
 ```javascript
 var string = 'true';
+
 rutil.toBool(string); // true
 ```
 
