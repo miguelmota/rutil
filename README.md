@@ -142,6 +142,7 @@ var htmlString = '<p><strong>foo</strong></p>';
 var text = rutil.stripTags(string);
 
 text // foo
+```
 
 ### formatPhone
 
@@ -149,7 +150,7 @@ text // foo
 var phone = 1234567890;
 var formattedPhone = rutil.formatPhone(phone);
 
-formatPhone // (123) 456-7890 
+formattedPhone // (123) 456-7890 
 ```
 
 ### validate.email
@@ -157,12 +158,9 @@ formatPhone // (123) 456-7890
 ```javascript
 var email = 'foo.bar-5@qux.com';
 var isValidEmail = rutil.validate.email(email); // true
-
-var email = 'foo...bar-5@qux.com';
-var isValidEmail = rutil.validate.email(email); // false
 ```
 
-### validate.email
+### validate.zip
 
 ```javascript
 var zip = 12345;
