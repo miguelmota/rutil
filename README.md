@@ -1,4 +1,4 @@
-# rutil v0.1.0
+# rutil v0.0.1
 
 Random utilities
 
