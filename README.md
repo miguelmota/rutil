@@ -14,6 +14,7 @@ Available via [npm](https://www.npmjs.org/)
 
 ```bash
 npm install rutil
+```
 
 # Utilities
 
