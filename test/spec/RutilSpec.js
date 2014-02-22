@@ -2,7 +2,7 @@ describe("Rutil", function() {
 
 	xdescribe("getParams", function() {
 
-		it("should be able to get params from window url", function() {
+		xit("should be able to get params from window url", function() {
 			var params = rutil.getParams();
 			if (!params) {
 				var url = window.location + '?foo=bar';
