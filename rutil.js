@@ -306,4 +306,4 @@
 	} else {
 		global.rutil = rutil;	
 	}
-})(window);
+})(this);
