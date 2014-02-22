@@ -10,19 +10,10 @@ Available via [Bower](http://bower.io/)
 bower install rutil
 ```
 
-```html
-<script src="rutil.js"></script>
-```
-
 Available via [npm](https://www.npmjs.org/)
 
 ```bash
 npm install rutil
-```
-
-```bash
-var rutil = require('rutil');
-```
 
 # Utilities
 
