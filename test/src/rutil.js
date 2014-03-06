@@ -34,7 +34,7 @@
 				var str = [];
 				for(var p in obj) {
 					var k = prefix ? prefix + '[' + p + ']' : p, v = obj[p];
-					if (v !== null) {
+					if (v !== undefined && v !== null) {
 						var set;
 						if (isObject(v)) {
 							set = s(v, k);
@@ -89,6 +89,16 @@
 			} catch(err) {}
 			return params;
 		};
+
+    var setQueryStringParam = function(uri, key, value) {
+      var regex = new RegExp('[?|&]' + key + '=.*?(&|$)', 'i');
+      var separator = uri.indexOf('?') !== -1 ? '&' : '?';
+      if (regex.test(uri)) {
+        return uri.replace(regex, '$1' + key + '=' + value + '$2');
+      } else {
+        return uri + separator + key + '=' + value;
+      }
+    };
 
 		/**
 		 * http://stackoverflow.com/a/2117523
@@ -270,6 +280,7 @@
 		rutil.serialize = serialize;
 		rutil.createPixel = createPixel;
 		rutil.getParams = getParams;
+		rutil.setQueryStringParam = setQueryStringParam;
 		rutil.generateUUID = generateUUID;
 		rutil.generateRandomString = generateRandomString;
 		rutil.hexToRgb = hexToRgb;

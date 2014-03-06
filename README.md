@@ -83,6 +83,16 @@ rutil.createPixel(url); // appends image tag to body
 rutil.getParams(); // {foo: "bar", baz: "qux"}
 ```
 
+### setQueryStringParam
+
+```javascript
+var uri = 'http://example.com?foo=bar';
+
+uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
+
+uri // http://example.com?foo=qux
+```
+
 ```javascript
 var url = 'http://example.com/?foo=bar&baz=qux';
 
