@@ -26,8 +26,16 @@ describe("Rutil", function() {
 	});
 
 	describe("setQueryStringParam", function() {
-		it("should set query string param", function() {
+		xit("should update query string param", function() {
       var uri = 'http://example.com?foo=bar&baz=qux';
+      uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
+			console.log('uri:', uri);
+
+			expect(uri).toMatch(/foo=qux/);
+		});
+
+		it("should set query string param", function() {
+      var uri = 'http://example.com?blank=';
       uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
 			console.log('uri:', uri);
 

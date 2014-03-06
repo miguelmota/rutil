@@ -91,7 +91,7 @@
 		};
 
     var setQueryStringParam = function(uri, key, value) {
-      var regex = new RegExp('[?|&]' + key + '=.*?(&|$)', 'i');
+      var regex = new RegExp('([?|&])' + key + '=.*?(&|#|$)', 'i');
       var separator = uri.indexOf('?') !== -1 ? '&' : '?';
       if (regex.test(uri)) {
         return uri.replace(regex, '$1' + key + '=' + value + '$2');
