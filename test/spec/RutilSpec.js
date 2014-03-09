@@ -25,7 +25,7 @@ describe("Rutil", function() {
 
 	});
 
-	describe("setQueryStringParam", function() {
+	xdescribe("setQueryStringParam", function() {
 		xit("should update query string param", function() {
       var uri = 'http://example.com?foo=bar&baz=qux';
       uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
@@ -274,6 +274,18 @@ describe("Rutil", function() {
 			var bool = rutil.toBool(str);
 			console.log(bool);
 			expect(bool).toBeTruthy();
+		});
+
+	});
+
+	describe("shuffle", function() {
+
+		it("should shuffle array", function() {
+      var arr = ['a', 'b', 'c', 'd', 'e', 'f'];
+			var shuffled = rutil.shuffle(arr);
+			console.log(arr);
+			console.log(shuffled);
+			expect(arr).not.toEqual(shuffled);
 		});
 
 	});

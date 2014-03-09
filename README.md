@@ -18,23 +18,20 @@ npm install rutil
 
 # Utilities
 
-### isObject
+### isObject(obj])
 
 ```javascript
 rutil.isObject({}); // true
 rutil.isObject([]); // false
-
-rutil.isObject({}, true); // true
-rutil.isObject([], true); // true
 ```
 
-### isArray
+### isArray(arr)
 
 ```javascript
 rutil.isArray([]); // true
 ```
 
-### merge
+### merge(obj1, obj2)
 
 ```javascript
 var obj1 = {
@@ -51,7 +48,7 @@ var obj3 = rutil.merge(obj1, obj2);
 obj3 // {foo: "qux", baz: 1234}
 ```
 
-### serialize
+### serialize(obj)
 
 ```javascript
 var obj = {
@@ -67,15 +64,17 @@ var obj = {
 rutil.serialize(obj); // uid=123&t=foo&t=bar&o%5Bbaz%5D=qux&q=foo%20bar
 ```
 
-### createPixel
+### shuffle(arr)
 
 ```javascript
-var url = 'http://example.com/pixel-tracker?id=1234567890';
+var arr = ['a', 'b', 'c', 'd', 'e', 'f'];
 
-rutil.createPixel(url); // appends image tag to body
+var shuffled = rutil.shuffle(arr);
+
+shuffled // ['c', 'e', 'b', 'd', 'f', 'a'] 
 ```
 
-### getParams
+### getParams([url])
 
 ```javascript
 // current url: http://example.com/?foo=bar&baz=qux
@@ -83,7 +82,13 @@ rutil.createPixel(url); // appends image tag to body
 rutil.getParams(); // {foo: "bar", baz: "qux"}
 ```
 
-### setQueryStringParam
+```javascript
+var url = 'http://example.com/?foo=bar&baz=qux';
+
+rutil.getParms(url) // {foo: "bar", baz: "qux"}
+```
+
+### setQueryStringParam(uri, key, val)
 
 ```javascript
 var uri = 'http://example.com?foo=bar';
@@ -93,19 +98,13 @@ uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
 uri // http://example.com?foo=qux
 ```
 
-```javascript
-var url = 'http://example.com/?foo=bar&baz=qux';
-
-rutil.getParms(url) // {foo: "bar", baz: "qux"}
-```
-
-### generateUUID
+### generateUUID()
 
 ```javascript
 rutil.generateUUID(); // 049128ed-b16c-4689-90d2-e910860d2797
 ```
 
-### generateRandomString
+### generateRandomString([length], [str])
 
 ```javascript
 rutil.generateRandomString(); // Ne46OxeEbWeDdFSDmwbOq4kfGkoKlMSh
@@ -115,7 +114,7 @@ rutil.generateRandomString(16); // mOPJBXXc9MR7nQf8
 rutil.generateRandomString(6, '0123456789'); // 388048
 ```
 
-### hexToRgb
+### hexToRgb(hex)
 
 ```javascript
 var hex = '#0077aa';
@@ -125,7 +124,7 @@ var rgb = rutil.hexToRgb(hex); // {"r":0,"g":119,"b":170}
 rgb.g // 119
 ```
 
-### getDatesInbetween
+### getDatesInbetween(dateObj1, dateObj2)
 
 ```javascript
 var from = new Date(2013,10,22);
@@ -138,7 +137,7 @@ dates.forEach(function(date) {
 });
 ```
 
-### parseHashtag
+### parseHashtag(str, url)
 
 ```javascript
 var string = '#foo #bar';
@@ -148,7 +147,7 @@ var linkifiedString = rutil.parseHashtag(string, 'http://twitter.com/search?q={{
 linkifiedString // <a href="http://twitter.com/search?q=%23foo">#foo</a> <a href="http://twitter.com/search?q=%23bar">#bar</a>
 ```
 
-### parseUsername
+### parseUsername(str, url)
 
 ```javascript
 var string = '@foo @bar';
@@ -158,7 +157,7 @@ var linkifiedString = rutil.parseUsername(string, 'http://twitter.com/{{username
 linkifiedString // <a href="http://twitter.com/foo">@foo</a> <a href="http://twitter.com/bar">@bar</a>
 ```
 
-### parseUrl
+### parseUrl(str)
 
 ```javascript
 var string = 'http://example.com/ http://github.com/';
@@ -168,7 +167,7 @@ var linkifiedString = rutil.parseUrl(string);
 linkifiedString // <a href="http://example.com/">http://example.com/</a> <a href="http://github.com/">http://github.com/</a>
 ```
 
-### stripTags
+### stripTags(str)
 
 ```javascript
 var htmlString = '<p><strong>foo</strong></p>';
@@ -178,7 +177,7 @@ var text = rutil.stripTags(htmlString);
 text // foo
 ```
 
-### formatPhone
+### formatPhone(num)
 
 ```javascript
 var phone = 1234567890;
@@ -188,7 +187,7 @@ var formattedPhone = rutil.formatPhone(phone);
 formattedPhone // (123) 456-7890
 ```
 
-### validate.email
+### validate.email(str)
 
 ```javascript
 var email = 'foo.bar-5@qux.com';
@@ -196,7 +195,7 @@ var email = 'foo.bar-5@qux.com';
 rutil.validate.email(email); // true
 ```
 
-### validate.zip
+### validate.zip(num)
 
 ```javascript
 var zip = 12345;
@@ -210,7 +209,7 @@ var zip = '12345-2453';
 rutil.validate.zip(zip); // true
 ```
 
-### validate.minAge
+### validate.minAge(dateObj, num)
 
 ```javascript
 var birthDate = new Date(1998, 02, 20);
@@ -218,7 +217,7 @@ var birthDate = new Date(1998, 02, 20);
 rutil.validate.minAge(birthDate, 18); // true
 ```
 
-### addCommas
+### addCommas(num)
 
 ```javascript
 var number = 1234567890.1234;
@@ -228,7 +227,7 @@ var numberWithCommas = rutil.addCommas(number);
 numberWithCommas // 1,234,567,890.1234
 ```
 
-### isMobileDevice
+### isMobileDevice([device])
 
 ```javascript
 rutil.isMobileDevice(); // bool
@@ -240,7 +239,15 @@ rutil.isMobileDevice('ios'); // bool
 options: 'iphone', 'ipad', 'ios', 'ios7', 'android', 'blackberry', 'ie', 'opera', 'webos'
 ```
 
-### toBool
+### createPixel(url)
+
+```javascript
+var url = 'http://example.com/pixel-tracker?id=1234567890';
+
+rutil.createPixel(url); // appends image tag to body
+```
+
+### toBool(str)
 
 ```javascript
 var string = 'true';
@@ -252,7 +259,7 @@ rutil.toBool(string); // true
 options: 'true', 'yes', 'on', '1'
 ```
 
-### sleep
+### sleep(num)
 
 ```javascript
 console.log('start sleep');
