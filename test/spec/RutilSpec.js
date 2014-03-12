@@ -278,7 +278,7 @@ describe("Rutil", function() {
 
 	});
 
-	describe("shuffle", function() {
+	xdescribe("shuffle", function() {
 
 		it("should shuffle array", function() {
       var arr = ['a', 'b', 'c', 'd', 'e', 'f'];
@@ -286,6 +286,31 @@ describe("Rutil", function() {
 			console.log(arr);
 			console.log(shuffled);
 			expect(arr).not.toEqual(shuffled);
+		});
+
+	});
+
+	describe("random", function() {
+    rutil.random = function(min, max) {
+      var args = [].slice.call(arguments);
+      if (args.length === 0) {
+        throw new Error('Need at least one argument');
+      }
+      if (typeof max === 'undefined') {
+        min = 0;
+        max = args[0];
+      }
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
+		it("should return a random number", function() {
+			var random = rutil.random(9);
+			console.log(random);
+			expect(random).toMatch(/[0-9]{1}/);
+
+			random = rutil.random(0,9);
+			console.log(random);
+			expect(random).toMatch(/[0-9]{1}/);
 		});
 
 	});

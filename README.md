@@ -114,6 +114,12 @@ rutil.generateRandomString(16); // mOPJBXXc9MR7nQf8
 rutil.generateRandomString(6, '0123456789'); // 388048
 ```
 
+### random(min, max)
+
+```javascript
+rutil.random(0,9); // 6
+```
+
 ### hexToRgb(hex)
 
 ```javascript

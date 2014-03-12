@@ -297,6 +297,18 @@
       return array;
     };
 
+    var random = function(min, max) {
+      var args = [].slice.call(arguments);
+      if (args.length === 0) {
+        throw new Error('Need at least one argument');
+      }
+      if (typeof max === 'undefined') {
+        min = 0;
+        max = args[0];
+      }
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
 		rutil.isArray = isArray;
 		rutil.isObject = isObject;
 		rutil.merge = merge;
@@ -324,6 +336,7 @@
 		rutil.prettyDate = prettyDate;
 		rutil.toBool = toBool;
     rutil.shuffle = shuffle;
+    rutil.random = random;
 
 		return rutil;
 
