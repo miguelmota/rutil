@@ -280,7 +280,7 @@ To extend the `_` when using libraries such as [underscore](http://underscorejs.
 ```
 _.mixin(rutil._()); // extend underscore
 
-_.isValidEmail('foo@bar.com'); // rutil function
+_.isValidEmail('foo@bar.com'); // use rutil function
 ```
 
 # Test
