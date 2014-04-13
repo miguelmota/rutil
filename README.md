@@ -273,9 +273,9 @@ rutil.sleep(50000);
 console.log('This will show after 5 seconds');
 ```
 
-# Extend [underscore.js](http://underscorejs.org/)/[lodash.js](http://lodash.com/)
+# Extend _
 
-Pass in `rutil._()` to the underscore mixin function. Rutil functions will not override underscore functions if it already exists, unless you pass `true` (`rutil._(true)`)
+To extend the `_` when using libraries such as [underscore](http://underscorejs.org/) or [lodash](http://lodash.com/), pass in `rutil._()` to the underscore mixin function. Rutil functions will not override underscore functions if they already exist, unless you pass `rutil._(true)`
 
 ```
 _.mixin(rutil._()); // extend underscore
