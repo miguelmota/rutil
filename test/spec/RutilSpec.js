@@ -1,318 +1,350 @@
+var _ = require('lodash');
+var rutil = require('../../rutil');
+
 describe("Rutil", function() {
 
-	xdescribe("getParams", function() {
-
-		xit("should be able to get params from window url", function() {
-			var params = rutil.getParams();
-			if (!params) {
-				var url = window.location + '?foo=bar';
-				window.history.pushState('test', 'Title', url);
-			}
+    xdescribe("getParams", function() {
+
+        xit("should be able to get params from window url", function() {
+            var params = rutil.getParams();
+            if (!params) {
+                var url = window.location + '?foo=bar';
+                window.history.pushState('test', 'Title', url);
+            }
 
-			params = rutil.getParams();
-
-			expect(params.foo === 'bar').toBeTruthy();
-		});
+            params = rutil.getParams();
+
+            expect(params.foo === 'bar').toBeTruthy();
+        });
 
-		it("should be able to get params from user url", function() {
+        it("should be able to get params from user url", function() {
 
-			var url = 'http://example.com/?foo=bar&baz=qux';
-			var params = rutil.getParams(url);
-			//console.log(params);
+            var url = 'http://example.com/?foo=bar&baz=qux';
+            var params = rutil.getParams(url);
+            //console.log(params);
 
-			expect(params.foo === 'bar').toBeTruthy();
-		});
+            expect(params.foo === 'bar').toBeTruthy();
+        });
 
-	});
+    });
 
-	xdescribe("setQueryStringParam", function() {
-		xit("should update query string param", function() {
-      var uri = 'http://example.com?foo=bar&baz=qux';
-      uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
-			console.log('uri:', uri);
+    xdescribe("setQueryStringParam", function() {
+        xit("should update query string param", function() {
+            var uri = 'http://example.com?foo=bar&baz=qux';
+            uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
+            console.log('uri:', uri);
 
-			expect(uri).toMatch(/foo=qux/);
-		});
+            expect(uri).toMatch(/foo=qux/);
+        });
 
-		it("should set query string param", function() {
-      var uri = 'http://example.com?blank=';
-      uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
-			console.log('uri:', uri);
+        it("should set query string param", function() {
+            var uri = 'http://example.com?blank=';
+            uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
+            console.log('uri:', uri);
 
-			expect(uri).toMatch(/foo=qux/);
-		});
-	});
+            expect(uri).toMatch(/foo=qux/);
+        });
+    });
 
-	xdescribe("generateUUID", function() {
-		it("should be be able to generate a UUID", function() {
-			var uuid = rutil.generateUUID();
-			console.log('uuid:', uuid);
+    xdescribe("generateUUID", function() {
+        it("should be be able to generate a UUID", function() {
+            var uuid = rutil.generateUUID();
+            console.log('uuid:', uuid);
 
-			expect(uuid).not.toBe(null);
-			expect(uuid).toMatch(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/);
-		});
-	});
+            expect(uuid).not.toBe(null);
+            expect(uuid).toMatch(/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}/);
+        });
+    });
 
-	xdescribe("generateRandomSring", function() {
-		xit("should be be able to generate a random 32 char string", function() {
-			var randomString = rutil.generateRandomString();
-			console.log('Random string:', randomString);
+    xdescribe("generateRandomSring", function() {
+        xit("should be be able to generate a random 32 char string", function() {
+            var randomString = rutil.generateRandomString();
+            console.log('Random string:', randomString);
 
-			expect(randomString).not.toBe(null);
-			expect(randomString).toMatch(/\w{32}/);
-		});
+            expect(randomString).not.toBe(null);
+            expect(randomString).toMatch(/\w{32}/);
+        });
 
-		it("should be be able to generate a random 6 char number string", function() {
-			var randomString = rutil.generateRandomString(6, '0123456789');
-			console.log('Random string:', randomString);
+        it("should be be able to generate a random 6 char number string", function() {
+            var randomString = rutil.generateRandomString(6, '0123456789');
+            console.log('Random string:', randomString);
 
-			expect(randomString).not.toBe(null);
-			//expect(randomString).toEqual(jasmine.any(Number));
-			expect(randomString).toMatch(/\w{6}/);
-		});
-	});
+            expect(randomString).not.toBe(null);
+            //expect(randomString).toEqual(jasmine.any(Number));
+            expect(randomString).toMatch(/\w{6}/);
+        });
+    });
 
-	xdescribe("hexToRgb", function() {
+    xdescribe("hexToRgb", function() {
 
-		it("should be be able to convert hex to rgb", function() {
-			var hex = '#0077aa';
-			var rgb = rutil.hexToRgb(hex);
-			console.log('rgb:', JSON.stringify(rgb));
+        it("should be be able to convert hex to rgb", function() {
+            var hex = '#0077aa';
+            var rgb = rutil.hexToRgb(hex);
+            console.log('rgb:', JSON.stringify(rgb));
 
-			expect(rgb.g).not.toBe(null);
-			expect(rgb.g).toEqual(119);
-		});
-	});
+            expect(rgb.g).not.toBe(null);
+            expect(rgb.g).toEqual(119);
+        });
+    });
 
-	xdescribe("getDatesInbetween", function() {
+    xdescribe("getDatesInbetween", function() {
 
-		it("should be be able to get dates inbetween", function() {
-			var from = new Date(2013,10,22);
-			var until = new Date(2013,11,25);
+        it("should be be able to get dates inbetween", function() {
+            var from = new Date(2013,10,22);
+            var until = new Date(2013,11,25);
 
-			var dates = rutil.getDatesInbetween(from, until);
-			dates.forEach(function(date) {
-				console.log(date);
-			});
+            var dates = rutil.getDatesInbetween(from, until);
+            dates.forEach(function(date) {
+                console.log(date);
+            });
 
-			expect(dates[0]).not.toBe(null);
-			expect(dates[0].getDate()).toEqual(22);
-		});
-	});
+            expect(dates[0]).not.toBe(null);
+            expect(dates[0].getDate()).toEqual(22);
+        });
+    });
 
-	xdescribe("sleep", function() {
+    xdescribe("sleep", function() {
 
-		it("should sleep for 5 seconds", function() {
-			console.log('start');
-			rutil.sleep(5000);
-			console.log('end');
+        it("should sleep for 5 seconds", function() {
+            console.log('start');
+            rutil.sleep(5000);
+            console.log('end');
 
-			expect(true).toBeTruthy();
-		});
-	});
+            expect(true).toBeTruthy();
+        });
+    });
 
-	xdescribe("parseHashtag", function() {
+    xdescribe("parseHashtag", function() {
 
-		it("should linkify hashtag", function() {
-			var string = 'loremipsum http://example.com/ #foo #bar';
-			var newString = rutil.parseHashtag(string, 'http://twitter.com/search?q={{tag}}');
-			console.log(newString);
+        it("should linkify hashtag", function() {
+            var string = 'loremipsum http://example.com/ #foo #bar';
+            var newString = rutil.parseHashtag(string, 'http://twitter.com/search?q={{tag}}');
+            console.log(newString);
 
-			expect(newString).toMatch(/href/);
-		});
-	});
+            expect(newString).toMatch(/href/);
+        });
+    });
 
-	xdescribe("parseUsername", function() {
+    xdescribe("parseUsername", function() {
 
-		it("should linkify username", function() {
-			var string = 'loremipsum http://example.com/ @github @twitter';
-			var newString = rutil.parseUsername(string, 'http://twitter.com/{{username}}');
-			console.log(newString);
+        it("should linkify username", function() {
+            var string = 'loremipsum http://example.com/ @github @twitter';
+            var newString = rutil.parseUsername(string, 'http://twitter.com/{{username}}');
+            console.log(newString);
 
-			expect(newString).toMatch(/href/);
-		});
-	});
+            expect(newString).toMatch(/href/);
+        });
+    });
 
-	xdescribe("parseUrl", function() {
+    xdescribe("parseUrl", function() {
 
-		it("should linkify url", function() {
-			var string = 'loremipsum http://example.com/ http://github.com/ #foo #bar';
-			var newString = rutil.parseUrl(string);
-			console.log(newString);
+        it("should linkify url", function() {
+            var string = 'loremipsum http://example.com/ http://github.com/ #foo #bar';
+            var newString = rutil.parseUrl(string);
+            console.log(newString);
 
-			expect(newString).toMatch(/(href)/);
-		});
-	});
+            expect(newString).toMatch(/(href)/);
+        });
+    });
 
-	xdescribe("stripTags", function() {
+    xdescribe("stripTags", function() {
 
-		it("should strip html tags", function() {
-			var string = '<p><strong>foo</strong></p>';
-			var newString = rutil.stripTags(string);
-			console.log(newString);
+        it("should strip html tags", function() {
+            var string = '<p><strong>foo</strong></p>';
+            var newString = rutil.stripTags(string);
+            console.log(newString);
 
-			expect(newString).toMatch(/^foo$/);
-		});
-	});
+            expect(newString).toMatch(/^foo$/);
+        });
+    });
 
-	xdescribe("formatPhone", function() {
+    xdescribe("formatPhone", function() {
 
-		it("should format phone number", function() {
-			var phone = 1234567890;
-			var formattedPhone = rutil.formatPhone(phone);
-			console.log(formattedPhone);
+        it("should format phone number", function() {
+            var phone = 1234567890;
+            var formattedPhone = rutil.formatPhone(phone);
+            console.log(formattedPhone);
 
-			expect(formattedPhone).toMatch(/\(123\)\s456\-7890/);
-		});
-	});
+            expect(formattedPhone).toMatch(/\(123\)\s456\-7890/);
+        });
+    });
 
-	xdescribe("validate.email", function() {
+    xdescribe("validate.email", function() {
 
-		it("should validate Email", function() {
-			var email = 'foo.bar-5@qux.com';
-			var isValidEmail = rutil.validate.email(email);
-			console.log(isValidEmail);
+        it("should validate Email", function() {
+            var email = 'foo.bar-5@qux.com';
+            var isValidEmail = rutil.validate.email(email);
+            console.log(isValidEmail);
 
-			expect(isValidEmail).toBeTruthy();
-		});
+            expect(isValidEmail).toBeTruthy();
+        });
 
-		it("should invalidate email", function() {
-			var email = 'foo...bar@qux.com';
-			var isValidEmail = rutil.validate.email(email);
-			console.log(isValidEmail);
+        it("should invalidate email", function() {
+            var email = 'foo...bar@qux.com';
+            var isValidEmail = rutil.validate.email(email);
+            console.log(isValidEmail);
 
-			expect(isValidEmail).toBeFalsy();
-		});
-	});
+            expect(isValidEmail).toBeFalsy();
+        });
+    });
 
-	xdescribe("validate.minAge", function() {
+    xdescribe("validate.minAge", function() {
 
-		it("should validate minimum age", function() {
-			var date = new Date(1996, 02, 20);
-			var isValidAge = rutil.validate.minAge(date, 18);
-			console.log(isValidAge);
+        it("should validate minimum age", function() {
+            var date = new Date(1996, 02, 20);
+            var isValidAge = rutil.validate.minAge(date, 18);
+            console.log(isValidAge);
 
-			expect(isValidAge).toBeTruthy();
-		});
+            expect(isValidAge).toBeTruthy();
+        });
 
-	});
+    });
 
-	xdescribe("validate.zip", function() {
+    xdescribe("validate.zip", function() {
 
-		it("should validate zip", function() {
-			var zip = '12345-2453';
-			var isValidZip = rutil.validate.zip(zip);
-			console.log(isValidZip);
+        it("should validate zip", function() {
+            var zip = '12345-2453';
+            var isValidZip = rutil.validate.zip(zip);
+            console.log(isValidZip);
 
-			expect(isValidZip).toBeTruthy();
-		});
+            expect(isValidZip).toBeTruthy();
+        });
 
-	});
+    });
 
-	xdescribe("addCommas", function() {
+    xdescribe("addCommas", function() {
 
-		it("should add commas", function() {
-			var number = 1234567890.1234;
-			var numberWithCommas = rutil.addCommas(number);
-			console.log(numberWithCommas);
+        it("should add commas", function() {
+            var number = 1234567890.1234;
+            var numberWithCommas = rutil.addCommas(number);
+            console.log(numberWithCommas);
 
-			expect(numberWithCommas).toEqual('1,234,567,890.1234');
-		});
+            expect(numberWithCommas).toEqual('1,234,567,890.1234');
+        });
 
-	});
+    });
 
-	xdescribe("merge", function() {
+    xdescribe("merge", function() {
 
-		it("should merge two objects", function() {
-			var obj1 = {
-				foo: 'bar',
-				baz: 1234
-			};
+        it("should merge two objects", function() {
+            var obj1 = {
+                foo: 'bar',
+            baz: 1234
+            };
 
-			var obj2 = {
-				foo: 'qux'				
-			};
+            var obj2 = {
+                foo: 'qux'
+            };
 
-			var obj3 = rutil.merge(obj1, obj2);
+            var obj3 = rutil.merge(obj1, obj2);
 
-			console.log(obj3);
+            console.log(obj3);
 
-			expect(obj3).toEqual({foo: 'qux', baz: 1234});
-		});
+            expect(obj3).toEqual({foo: 'qux', baz: 1234});
+        });
 
-	});
+    });
 
-	xdescribe("isMobileDevice", function() {
+    xdescribe("isMobileDevice", function() {
 
-		xit("should check if is mobile device", function() {
-			var isMobileDevice = rutil.isMobileDevice();
-			console.log(isMobileDevice);
-			expect(isMobileDevice).toMatch(/(true|false)/);
-		});
+        xit("should check if is mobile device", function() {
+            var isMobileDevice = rutil.isMobileDevice();
+            console.log(isMobileDevice);
+            expect(isMobileDevice).toMatch(/(true|false)/);
+        });
 
-		xit("should check if is mobile device ios", function() {
-			var isMobileDevice = rutil.isMobileDevice('ios');
-			expect(isMobileDevice).toBeTruthy();
-		});
+        xit("should check if is mobile device ios", function() {
+            var isMobileDevice = rutil.isMobileDevice('ios');
+            expect(isMobileDevice).toBeTruthy();
+        });
 
-		it("should check if is mobile device ios7", function() {
-			var isMobileDevice = rutil.isMobileDevice('ios7');
-			expect(isMobileDevice).toBeTruthy();
-		});
+        it("should check if is mobile device ios7", function() {
+            var isMobileDevice = rutil.isMobileDevice('ios7');
+            expect(isMobileDevice).toBeTruthy();
+        });
 
-		xit("should check if is mobile device android", function() {
-			var isMobileDevice = rutil.isMobileDevice('android');
-			expect(isMobileDevice).toBeTruthy();
-		});
+        xit("should check if is mobile device android", function() {
+            var isMobileDevice = rutil.isMobileDevice('android');
+            expect(isMobileDevice).toBeTruthy();
+        });
 
-	});
+    });
 
-	xdescribe("toBool", function() {
+    xdescribe("toBool", function() {
 
-		it("should return a boolean", function() {
-			var str = '1';
-			var bool = rutil.toBool(str);
-			console.log(bool);
-			expect(bool).toBeTruthy();
-		});
+        it("should return a boolean", function() {
+            var str = '1';
+            var bool = rutil.toBool(str);
+            console.log(bool);
+            expect(bool).toBeTruthy();
+        });
 
-	});
+    });
 
-	xdescribe("shuffle", function() {
+    xdescribe("shuffle", function() {
 
-		it("should shuffle array", function() {
-      var arr = ['a', 'b', 'c', 'd', 'e', 'f'];
-			var shuffled = rutil.shuffle(arr);
-			console.log(arr);
-			console.log(shuffled);
-			expect(arr).not.toEqual(shuffled);
-		});
+        it("should shuffle array", function() {
+            var arr = ['a', 'b', 'c', 'd', 'e', 'f'];
+            var shuffled = rutil.shuffle(arr);
+            console.log(arr);
+            console.log(shuffled);
+            expect(arr).not.toEqual(shuffled);
+        });
 
-	});
+    });
 
-	describe("random", function() {
-    rutil.random = function(min, max) {
-      var args = [].slice.call(arguments);
-      if (args.length === 0) {
-        throw new Error('Need at least one argument');
-      }
-      if (typeof max === 'undefined') {
-        min = 0;
-        max = args[0];
-      }
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
+    xdescribe("random", function() {
+        rutil.random = function(min, max) {
+            var args = [].slice.call(arguments);
+            if (args.length === 0) {
+                throw new Error('Need at least one argument');
+            }
+            if (typeof max === 'undefined') {
+                min = 0;
+                max = args[0];
+            }
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
 
-		it("should return a random number", function() {
-			var random = rutil.random(9);
-			console.log(random);
-			expect(random).toMatch(/[0-9]{1}/);
+        it("should return a random number", function() {
+            var random = rutil.random(9);
+            console.log(random);
+            expect(random).toMatch(/[0-9]{1}/);
 
-			random = rutil.random(0,9);
-			console.log(random);
-			expect(random).toMatch(/[0-9]{1}/);
-		});
+            random = rutil.random(0,9);
+            console.log(random);
+            expect(random).toMatch(/[0-9]{1}/);
+        });
 
-	});
+    });
+
+    describe("underscore", function() {
+        xit("underscore mixin", function() {
+            function foo() {
+               return 'foo';
+            }
+            _.mixin({'foo': foo});
+
+            expect(_.foo()).toEqual('foo');
+        });
+
+        it("mixin", function() {
+
+            _.mixin(rutil._());
+
+            expect(_.isValidEmail('foo@bar.com')).toEqual(true);
+        });
+
+        xit("mixin override", function() {
+
+            rutil.random = function() {
+                return true;
+            };
+
+            _.mixin(rutil._(true));
+
+            expect(_.random()).toEqual(true);
+        });
+    });
 
 });

@@ -71,7 +71,7 @@ var arr = ['a', 'b', 'c', 'd', 'e', 'f'];
 
 var shuffled = rutil.shuffle(arr);
 
-shuffled // ['c', 'e', 'b', 'd', 'f', 'a'] 
+shuffled // ['c', 'e', 'b', 'd', 'f', 'a']
 ```
 
 ### getParams([url])
@@ -193,34 +193,34 @@ var formattedPhone = rutil.formatPhone(phone);
 formattedPhone // (123) 456-7890
 ```
 
-### validate.email(str)
+### isValidEmail(str)
 
 ```javascript
 var email = 'foo.bar-5@qux.com';
 
-rutil.validate.email(email); // true
+rutil.isValidEmail(email); // true
 ```
 
-### validate.zip(num)
+### isValidZip(num)
 
 ```javascript
 var zip = 12345;
 
-rutil.validate.zip(zip); // true
+rutil.isValidZip(zip); // true
 ```
 
 ```javascript
 var zip = '12345-2453';
 
-rutil.validate.zip(zip); // true
+rutil.isValidZip(zip); // true
 ```
 
-### validate.minAge(dateObj, num)
+### isValidMinAge(dateObj, num)
 
 ```javascript
 var birthDate = new Date(1998, 02, 20);
 
-rutil.validate.minAge(birthDate, 18); // true
+rutil.isValidMinAge(birthDate, 18); // true
 ```
 
 ### addCommas(num)
@@ -271,6 +271,16 @@ options: 'true', 'yes', 'on', '1'
 console.log('start sleep');
 rutil.sleep(50000);
 console.log('This will show after 5 seconds');
+```
+
+# Extend [underscore.js](http://underscorejs.org/)/[lodash.js](http://lodash.com/)
+
+Pass in `rutil._()` to the underscore mixin function. Rutil functions will not override underscore functions if it already exists, unless you pass `true` (`rutil._(true)`)
+
+```
+_.mixin(rutil._()); // extend underscore
+
+_.isValidEmail('foo@bar.com'); // rutil function
 ```
 
 # Test
