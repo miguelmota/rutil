@@ -263,7 +263,7 @@ rutil.pad(10); // 10
 rutil.pad(9); // 9
 ```
 
-### capitalize(num, [lowercase])
+### capitalize(str, [lowercase])
 
 ```javascript
 rutil.capitalize('foo'); // Foo
