@@ -209,6 +209,22 @@ var zip = 12345;
 rutil.isValidZip(zip); // true
 ```
 
+### isValidName(str)
+
+```javascript
+rutil.isValidName('Foo'); // true
+rutil.isValidName('Foo*'); // false
+rutil.isValidName('Foo1'); // false
+```
+
+### isValidUsername(str)
+
+```javascript
+rutil.isValidUsername('foo') // true
+rutil.isValidUsername('foo_bar1') // true
+rutil.isValidUsername('foo-bar') // false
+```
+
 ```javascript
 var zip = '12345-2453';
 
@@ -231,6 +247,28 @@ var number = 1234567890.1234;
 var numberWithCommas = rutil.addCommas(number);
 
 numberWithCommas // 1,234,567,890.1234
+```
+
+### repeat(str, [times])
+
+```javascript
+rutil.repeat('foo'); // foofoo
+rutil.repeat('foo', 5); // foofoofoofoofoo
+```
+
+### pad(num)
+
+```javascript
+rutil.pad(10); // 10
+rutil.pad(9); // 9
+```
+
+### capitalize(num, [lowercase])
+
+```javascript
+rutil.capitalize('foo'); // Foo
+rutil.capitalize('fooBarQux'); // 'FooBarQux'
+rutil.capitalize('fooBarQux', true); // 'Foobarqux'
 ```
 
 ### isMobileDevice([device])

@@ -212,6 +212,25 @@ describe("Rutil", function() {
 
     });
 
+    xdescribe("isValidName", function() {
+
+        it("should validate name", function() {
+            expect(rutil.isValidName('Foo')).toBeTruthy();
+            expect(rutil.isValidName('Foo*')).toBeFalsy();
+            expect(rutil.isValidName('Foo1')).toBeFalsy();
+        });
+
+    });
+
+    xdescribe("isValidUsername", function() {
+
+        it("should validate username", function() {
+            expect(rutil.isValidUsername('foobar_')).toBeTruthy();
+            expect(rutil.isValidUsername('foobar-')).toBeFalsy();
+        });
+
+    });
+
     xdescribe("addCommas", function() {
 
         it("should add commas", function() {
@@ -318,7 +337,47 @@ describe("Rutil", function() {
 
     });
 
-    describe("underscore", function() {
+    xdescribe("capitalize", function() {
+
+        xit("should capitalize string", function() {
+            expect(rutil.capitalize('foo')).toEqual('Foo');
+        });
+
+        it("should lowercase string and uppercase first letter", function() {
+            var string = 'fooBarQux';
+            expect(rutil.capitalize(string)).toEqual('FooBarQux');
+            expect(rutil.capitalize(string, true)).toEqual('Foobarqux');
+        });
+
+    });
+
+    xdescribe("pad", function() {
+
+        xit("should pad number", function() {
+            expect(rutil.pad(1)).toEqual(01);
+            expect(rutil.pad(10, 2)).toEqual(0010);
+        });
+
+    });
+
+    xdescribe("repeat", function() {
+
+        it("should repeat string 5 times", function() {
+            expect(rutil.repeat('a')).toEqual('aa');
+            expect(rutil.repeat('foo', 5)).toEqual('foofoofoofoofoo');
+        });
+
+    });
+
+    xdescribe("pad", function() {
+
+        it("should pad number", function() {
+            expect(rutil.pad(9)).toEqual('09');
+        });
+
+    });
+
+    xdescribe("underscore", function() {
         xit("underscore mixin", function() {
             function foo() {
                return 'foo';

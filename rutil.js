@@ -19,7 +19,7 @@
 
         var merge = function(obj1, obj2){
             var obj3 = {},
-        attrname;
+            attrname;
             for (attrname in obj1) {
                 obj3[attrname] = obj1[attrname];
             }
@@ -101,8 +101,8 @@
         };
 
         /**
-         * http://stackoverflow.com/a/2117523
-         */
+        * http://stackoverflow.com/a/2117523
+        */
         var generateUUID = function() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
@@ -112,7 +112,7 @@
 
         var generateRandomString = function(length, chars) {
             var str = [],
-                i;
+            i;
             length = length || 32;
             chars = chars || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             for (i = 0; i < length; i++) {
@@ -131,22 +131,22 @@
             var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
             return result ? {
                 r: parseInt(result[1], 16),
-                    g: parseInt(result[2], 16),
-                    b: parseInt(result[3], 16)
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
             } : null;
         };
 
         /**
-         * Returns an array of dates between the two dates
-         */
+        * Returns an array of dates between the two dates
+        */
         var getDatesInbetween = function(startDate, endDate) {
             var dates = [],
-                currentDate = startDate,
-                addDays = function(days) {
-                    var date = new Date(this.valueOf());
-                    date.setDate(date.getDate() + days);
-                    return date;
-                };
+            currentDate = startDate,
+            addDays = function(days) {
+                var date = new Date(this.valueOf());
+                date.setDate(date.getDate() + days);
+                return date;
+            };
             while (currentDate <= endDate) {
                 dates.push(currentDate);
                 currentDate = addDays.call(currentDate, 1);
@@ -244,6 +244,16 @@
             return regex.test(zip);
         };
 
+        var validateUsername = function(username) {
+            var regex = /^[a-zA-Z0-9_]+$/;
+            return regex.test(username);
+        };
+
+        var validateName = function(name) {
+            var regex = /^[a-zA-Z-' ]*$/;
+            return regex.test(name);
+        };
+
         var addCommas = function(n) {
             if (!n) return n;
             var parts = n.toString().split('.');
@@ -264,13 +274,13 @@
                 'Sunday', 'Monday', 'Tuesday',
                 'Wednesday', 'Thursday', 'Friday',
                 'Saturday'
-                    ];
+            ];
             var monthNames = [
                 'January', 'February', 'March',
                 'April', 'May', 'June',
                 'July', 'August', 'September',
                 'October', 'November', 'December'
-                    ];
+            ];
             return dayNames[date.getDay()] + ' ' + monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
         };
 
@@ -278,8 +288,8 @@
         var shuffle = function(arr) {
             var array = [].slice.call(arr) || [];
             var currentIndex = array.length,
-                temporaryValue,
-                randomIndex;
+            temporaryValue,
+            randomIndex;
 
             // While there remain elements to shuffle...
             while (0 !== currentIndex) {
@@ -309,6 +319,21 @@
             return Math.floor(Math.random() * (max - min + 1)) + min;
         };
 
+        var repeat = function(str, times) {
+            times = times || 2;
+            return Array(times + 1).join(str);
+        };
+
+        var pad = function (num) {
+            return ((num < 10 ? '0' : '') + num);
+        };
+
+        var capitalize = function(str, lower) {
+            return (lower ? str.toLowerCase() : str).replace(/(?:^|\s)\S/g, function(a) {
+                return a.toUpperCase();
+            });
+        };
+
         var _ = function(override) {
             var mixinObj = {};
             for (var k in rutil) {
@@ -325,8 +350,6 @@
             delete mixinObj._;
             return mixinObj;
         };
-
-        //a.push.apply(a, b)
 
         rutil.isArray = isArray;
         rutil.isObject = isObject;
@@ -354,11 +377,16 @@
         rutil.isValidEmail = validateEmail;
         rutil.isValidMinAge = validateMinAge;
         rutil.isValidZip = validateZip;
+        rutil.isValidUsername = validateUsername;
+        rutil.isValidName = validateName;
         rutil.addCommas = addCommas;
         rutil.prettyDate = prettyDate;
         rutil.toBool = toBool;
         rutil.shuffle = shuffle;
         rutil.random = random;
+        rutil.repeat = repeat;
+        rutil.pad = pad;
+        rutil.capitalize = capitalize;
         rutil._ = _;
 
         return rutil;
