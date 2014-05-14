@@ -334,6 +334,151 @@
             });
         };
 
+
+        /*
+        //TODO
+        function isTruthy(x) {
+        return x;
+        }
+
+        function isFalsy(x) {
+        return !istruthy(x);
+        }
+
+        function execFunc(func) {
+        return _.isFunction(func) ? func() : _.noop();
+        }
+
+        function preCondition(array, success, fail) {
+        if (_.every(array, truthy)) {
+        execFunc(success);
+        } else {
+        execFunc(fail);
+        }
+        }
+
+        function addEvent(element, eventName, func) {
+        if (element.addEventListener) {
+        return element.addEventListener(eventName, func, false);
+        } else if (element.attachEvent) {
+        return element.attachEvent("on" + eventName, func);
+        }
+        };
+
+        var prop = function(obj) {
+        return function(name) {
+        return obj[name];
+        };
+        };
+
+        var textNode = document.createTextNode.bind(document);
+
+        var wrap = function(elementType) {
+        return function(child) {
+        var parent = document.createElement(elementType);
+        parent.appendChild(child);
+        return parent;
+        };
+        };
+
+        var append = function(parent, child) {
+        parent.appendChild(child);
+        return parent;
+        };
+        var append = function(parent, child) {
+        parent.appendChild(child);
+        return parent;
+        };
+        ))
+
+    function hasClass(elem, className) {
+        return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
+    }
+
+    function addClass(elem, className) {
+        if (!hasClass(elem, className)) {
+            elem.className += ' ' + className;
+        }
+    }
+
+    function removeClass(elem, className) {
+        var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ') + ' ';
+        if (hasClass(elem, className)) {
+            while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
+                newClass = newClass.replace(' ' + className + ' ', ' ');
+            }
+            elem.className = newClass.replace(/^\s+|\s+$/g, '');
+        }
+    }
+
+        function flat(ary) {
+         return [].concat.apply([], Array.isArray(ary) ? ary.map(function(item) {
+           return Array.isArray(item) ? flat(item) : item;
+            }) : [ary]);
+            }
+
+     function sum() {¬
+      ¦   return _.reduce(flat(arguments), function (acc, n) {¬
+       ¦   ¦   return acc += n;¬
+        ¦   }, 0);¬
+         ¬
+
+        function int(x) {
+            return parseInt(x, 10);
+        }
+
+        //Returns true if it is a DOM node
+        //function isNode(o){
+        //  return (
+        //      typeof Node === "object" ? o instanceof Node :
+        //          o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
+        //            );
+        //            }
+        //
+        //            //Returns true if it is a DOM element
+        //            function isElement(o){
+        //              return (
+        //                  typeof HTMLElement === "object" ? o instanceof HTMLElement : //DOM2
+        //                      o && typeof o === "object" && o !== null && o.nodeType === 1 && typeof o.nodeName==="string"
+        //                      );
+        //                      }}
+
+
+
+    function noop() {
+        return function(){};
+    }
+
+			function isDateInRange(start, stop, now) {
+				return (now.valueOf() >= start.valueOf() && now.valueOf() <= stop.valueOf()) ? true : false;
+			}
+
+
+
+function compactObject(obj) {
+    _.forOwn(obj, function(val, key) {
+       if (_.isEmpty(val)) delete obj[key];
+    });
+    return obj;
+}
+
+function d3_functor(v) {
+  return typeof v === "function" ? v : function() { return v; };
+  }
+  function d3_class(ctor, properties) {
+    try {
+        for (var key in properties) {
+              Object.defineProperty(ctor.prototype, key, {
+                      value: properties[key],
+                              enumerable: false
+                                    });
+                                        }
+                                          } catch (e) {
+                                              ctor.prototype = properties;
+                                                }
+                                                }])
+        */
+
         var _ = function(override) {
             var mixinObj = {};
             for (var k in rutil) {
