@@ -3,13 +3,468 @@ var rutil = require('../../rutil');
 
 describe("Rutil", function() {
 
+    /**
+     * Objects
+     */
+
+    xdescribe("isEmpty", function() {
+        it("should return true if empty value", function() {
+            expect(rutil.isEmpty('')).toBeTruthy();
+            expect(rutil.isEmpty([])).toBeTruthy();
+            expect(rutil.isEmpty({})).toBeTruthy();
+            expect(rutil.isEmpty(undefined)).toBeTruthy();
+            expect(rutil.isEmpty(null)).toBeTruthy();
+            expect(rutil.isEmpty(0)).toBeFalsy();
+        });
+    });
+
+    xdescribe("isExisty", function() {
+        it("should return true if not null or undefined", function() {
+            expect(rutil.isExisty(null)).toBeFalsy();
+            expect(rutil.isExisty(undefined)).toBeFalsy();
+            expect(rutil.isExisty(0)).toBeTruthy();
+            expect(rutil.isExisty(1)).toBeTruthy();
+            expect(rutil.isExisty(false)).toBeTruthy();
+            expect(rutil.isExisty('')).toBeTruthy();
+        });
+
+    });
+
+    xdescribe("isTruthy", function() {
+
+        it("should return truthy", function() {
+            expect(rutil.isTruthy('')).toBeFalsy();
+            expect(rutil.isTruthy(0)).toBeFalsy();
+            expect(rutil.isTruthy(null)).toBeFalsy();
+            expect(rutil.isTruthy(undefined)).toBeFalsy();
+            expect(rutil.isTruthy(1)).toBeTruthy();
+            expect(rutil.isTruthy({})).toBeTruthy();
+            expect(rutil.isTruthy((function() { return true; })())).toBeTruthy();
+        });
+
+    });
+
+    xdescribe("isFalsy", function() {
+
+        it("should return falsy", function() {
+            expect(rutil.isFalsy('')).toBeTruthy();
+            expect(rutil.isFalsy(0)).toBeTruthy();
+            expect(rutil.isFalsy(null)).toBeTruthy();
+            expect(rutil.isFalsy(undefined)).toBeTruthy();
+            expect(rutil.isFalsy(1)).toBeFalsy();
+            expect(rutil.isFalsy({})).toBeFalsy();
+        });
+
+    });
+
+    xdescribe("isString", function() {
+        it("should return true if string", function() {
+            expect(rutil.isString('')).toBeTruthy();
+            expect(rutil.isString(0)).toBeFalsy();
+            expect(rutil.isString(false)).toBeFalsy();
+            expect(rutil.isString(null)).toBeFalsy();
+            expect(rutil.isString(function(){})).toBeFalsy();
+        });
+    });
+
+    xdescribe("isNumber", function() {
+        it("should return true if number", function() {
+            expect(rutil.isNumber('')).toBeFalsy();
+            expect(rutil.isNumber(0)).toBeTruthy();
+            expect(rutil.isNumber(false)).toBeFalsy();
+            expect(rutil.isNumber(null)).toBeFalsy();
+            expect(rutil.isNumber(function(){})).toBeFalsy();
+        });
+    });
+
+    xdescribe("isBoolean", function() {
+        it("should return true if boolean", function() {
+            expect(rutil.isBool('')).toBeFalsy();
+            expect(rutil.isBool(0)).toBeFalsy();
+            expect(rutil.isBool(false)).toBeTruthy();
+            expect(rutil.isBool(true)).toBeTruthy();
+            expect(rutil.isBool(null)).toBeFalsy();
+            expect(rutil.isBool(function(){})).toBeFalsy();
+        });
+    });
+
+    xdescribe("isFunction", function() {
+
+        it("should return true if function", function() {
+            var obj = {
+                f: function() {}
+            };
+            expect(rutil.isFunction('')).toBeFalsy();
+            expect(rutil.isFunction(1)).toBeFalsy();
+            expect(rutil.isFunction(function(){})).toBeTruthy();
+            expect(rutil.isFunction(obj.f)).toBeTruthy();
+        });
+
+    });
+
+    xdescribe("noop", function() {
+        it("should return an empty function", function() {
+            expect(rutil.noop()).not.toBeDefined();
+        });
+    });
+
+    xdescribe("functor", function() {
+        it("should wrap value in function if not function", function() {
+
+            var f = 'foo';
+            var g = function() {
+                return 'bar';
+            };
+
+            expect(rutil.isFunction(rutil.functor(f))).toBeTruthy();
+            expect(rutil.functor(f)()).toEqual('foo');
+
+            expect(rutil.isFunction(rutil.functor(g))).toBeTruthy();
+            expect(rutil.functor(g)()).toEqual('bar');
+        });
+
+    });
+
+    xdescribe("preCondition", function() {
+        it("should succeed if valid", function() {
+
+            var conditions = [
+                (function() {
+                   return true;
+                })(),
+                true
+            ];
+
+            var o = {
+                success: function success() {
+
+                },
+                fail: function fail() {
+
+                }
+            };
+
+            spyOn(o, 'success');
+            spyOn(o, 'fail');
+
+            expect(rutil.preCondition(conditions)).toBeTruthy();
+            rutil.preCondition(conditions, o.success, o.fail)
+            expect(o.success).toHaveBeenCalled();
+            expect(o.fail).not.toHaveBeenCalled();
+
+            conditions = [
+                (function() {
+                    return false;
+                })(),
+                true
+            ];
+
+            expect(rutil.preCondition(conditions)).toBeFalsy();
+
+            conditions = [
+                (function() {
+                    return true;
+                })(),
+                false
+            ];
+
+            expect(rutil.preCondition(conditions)).toBeFalsy();
+        });
+
+    });
+
+    xdescribe("complement", function() {
+        it("should return complement", function() {
+            function f() {
+                return true;
+            }
+            var g = rutil.complement(f);
+            expect(f()).toBeTruthy();
+            expect(g()).toBeFalsy();
+        });
+    });
+
+
+    xdescribe("prop", function() {
+        it("should return a function that returns the object's value", function() {
+
+            var o = {
+                foo: 'foq',
+                bar: 'baq'
+            };
+            var obj = rutil.prop(o);
+
+            expect(obj('foo')).toEqual('foq');
+            expect(obj('bar')).toEqual('baq');
+        });
+
+    });
+
+    xdescribe("prop", function() {
+        it("should return a function that returns the object's value", function() {
+
+            var o = {
+                foo: 'foq',
+                bar: 'baq'
+            };
+            var obj = rutil.prop(o);
+
+            expect(obj('foo')).toEqual('foq');
+            expect(obj('bar')).toEqual('baq');
+        });
+
+    });
+
+    xdescribe("idenity", function() {
+        it("should return itself", function() {
+            expect(rutil.identity({foo: 'bar'})).toEqual({foo: 'bar'});
+        });
+    });
+
+    /**
+     * Arrays
+     */
+
+    xdescribe("toArray", function() {
+        it("should return an array", function() {
+            (function() {
+                expect(rutil.toArray(arguments)).toEqual([1,2,3]);
+            })(1,2,3);
+        });
+    });
+
+    xdescribe("flatten", function() {
+        it("should flatten an array recursively", function() {
+            expect(rutil.flatten(['o',1,[['q', {a:'b'}, ['c',2]]]])).toEqual(['o',1,'q',{a:'b'},'c',2]);
+        });
+    });
+
+    xdescribe("reduce", function() {
+        it("should reduce array", function() {
+            expect(rutil.reduce([1,2,3], function(acc, v, i) {
+                return acc += v;
+            })).toEqual(6);
+        });
+    });
+
+    xdescribe("map", function() {
+        it("should map array", function() {
+            expect(rutil.map([1,2,3], function(v, i) {
+                return v * 2;
+            })).toEqual([2,4,6]);
+        });
+    });
+
+    xdescribe("filter", function() {
+        it("should filter array", function() {
+            expect(rutil.filter([1,2,3], function(v, i) {
+                return v % 2 === 1;
+            })).toEqual([1,3]);
+        });
+    });
+
+    xdescribe("some", function() {
+        it("should return true if some", function() {
+            expect(rutil.some([1,2,3], function(v, i) {
+                return v > 2;
+            })).toBeTruthy();
+            expect(rutil.some([2,4,6], function(v, i) {
+                return v % 2 === 1;
+            })).toBeFalsy();
+        });
+    });
+
+    xdescribe("every", function() {
+        it("should return true if every", function() {
+            expect(rutil.every([2,4,6], function(v, i) {
+                return v < 5;
+            })).toBeFalsy();
+            expect(rutil.every([2,4,6], function(v, i) {
+                return v % 2 === 0;
+            })).toBeTruthy();
+        });
+    });
+
+    xdescribe("sum", function() {
+        it("should sum all values in array", function() {
+            expect(rutil.sum([2,3,4,5,3,23,45,[2,[4,6]]])).toEqual(97);
+        });
+    });
+
+    xdescribe("sum", function() {
+        it("should sum all values in array", function() {
+            expect(rutil.sum([2,3,4,5,3,23,45,[2,[4,6]]])).toEqual(97);
+        });
+    });
+
+    xdescribe("size", function() {
+        it("should return size of array or object", function() {
+            expect(rutil.size([2,{},'a'])).toEqual(3);
+            expect(rutil.size({a: 'b', c: 2, d: false})).toEqual(3);
+            expect(rutil.size('foo')).toEqual(3);
+        });
+    });
+
+    xdescribe("average", function() {
+        it("should return average of sum", function() {
+            expect(rutil.average([2,4,6])).toEqual(4);
+        });
+    });
+
+    xdescribe("int", function() {
+        it("should typecast to integer", function() {
+            expect(rutil.int('2')).toEqual(2);
+        });
+    });
+
+    xdescribe("string", function() {
+        it("should typecast to string", function() {
+            expect(rutil.string(2)).toEqual('2');
+        });
+    });
+
+    xdescribe("isIndexed", function() {
+        it("should return true if indexed", function() {
+            expect(rutil.isIndexed([])).toBeTruthy();
+            expect(rutil.isIndexed('')).toBeTruthy();
+            expect(rutil.isIndexed(1)).toBeFalsy();
+            expect(rutil.isIndexed({})).toBeFalsy();
+        });
+    });
+
+    xdescribe("isDateInRange", function() {
+        it("should return true if date in reange", function() {
+            expect(rutil.isDateInRange(new Date(2014,05,01), new Date(2014,06,04), new Date(2014,06,03))).toBeTruthy();
+            expect(rutil.isDateInRange(new Date(2014,05,01), new Date(2016,08,04), Date.now())).toBeTruthy();
+            expect(rutil.isDateInRange(new Date(2014,05,01), new Date(2014,04,04), new Date(2014,06,03))).toBeFalsy();
+        });
+    });
+
+    xdescribe("comparator", function() {
+        it("should return a comparator function", function() {
+            var lessOrEqual = function(x, y) {
+                return x <= y;
+            };
+
+            var greaterOrEqual = function(x, y) {
+                return x >= y;
+            };
+
+            expect([1,2,3].sort(rutil.comparator(lessOrEqual))).toEqual([1,2,3]);
+            expect([1,2,3].sort(rutil.comparator(greaterOrEqual))).toEqual([3,2,1]);
+        });
+    });
+
+    xdescribe("nth", function() {
+        it("should return nth indexed value", function() {
+            expect(rutil.nth(['a','b','c'], 2)).toEqual('c');
+        });
+    });
+
+    xdescribe("first", function() {
+        it("should return first indexed value", function() {
+            expect(rutil.first(['a','b','c'])).toEqual('a');
+        });
+    });
+
+    xdescribe("last", function() {
+        it("should return last indexed value", function() {
+            expect(rutil.last(['a','b','c'])).toEqual('c');
+        });
+    });
+
+    xdescribe("rest", function() {
+        it("should return all but first", function() {
+            expect(rutil.rest(['a','b','c'])).toEqual(['b','c']);
+        });
+    });
+
+    xdescribe("doWhen", function() {
+        it("should run action if condition is true", function() {
+            var cond = function() {
+                return true;
+            };
+
+            var cond2= function() {
+                return false;
+            }
+
+            var o = {
+                fun: function() {
+                    return 'foo';
+                }
+            };
+
+            expect(o.fun()).toEqual('foo');
+            expect(rutil.isTruthy(cond())).toBeTruthy();
+            expect(rutil.doWhen(cond(), o.fun )).toEqual('foo');
+            expect(rutil.doWhen(cond2(), o.fun )).toBeFalsy();
+        });
+    });
+
+    xdescribe("result", function() {
+        it("should run property function or return value", function() {
+            var o = {
+                a: function() {
+                    return 'bar';
+                },
+                b: 'foo'
+            };
+            expect(rutil.result(o, 'a')).toEqual('bar');
+            expect(rutil.result(o, 'b')).toEqual('foo');
+        });
+    });
+
+    xdescribe("executeIfHasField", function() {
+        it("should run function if exity", function() {
+            var o = {
+                a: function() {
+                    return 'bar';
+                },
+                b: 'foo'
+            };
+            expect(rutil.result(o, 'a')).toEqual('bar');
+            expect(rutil.result(o, 'b')).toEqual('foo');
+            expect(rutil.result(o, 'c')).not.toBeDefined();
+        });
+    });
+
+    xdescribe("forOwn", function() {
+        it("should iterate over own properties", function() {
+            var o = {
+                a: 'b',
+                c: function() {},
+                d: null
+            };
+
+            var keys = [];
+            var vals  = [];
+
+            rutil.forOwn(o, function(v, k) {
+                keys.push(k);
+                vals.push(v);
+            });
+
+            expect(keys).toEqual(['a','c','d']);
+            expect(vals).toEqual(['b',o.c,null]);
+        });
+    });
+
+    xdescribe("compactObject", function() {
+        it("should return an object with no empty properties", function() {
+            expect(rutil.compactObject({a: 'b', foo: null, b: false, taco: 1, qux: 0, c: '', d: []})).toEqual({a: 'b', b: false, taco: 1, qux: 0});
+        });
+    });
+
     xdescribe("getParams", function() {
 
-        xit("should be able to get params from window url", function() {
-            var params = rutil.getParams();
-            if (!params) {
+        it("should be able to get params from window url", function(done) {
+            if (window) {
+                var params = rutil.getParams();
                 var url = window.location + '?foo=bar';
                 window.history.pushState('test', 'Title', url);
+            } else {
+                var params = 'http://example.com/?foo=bar';
             }
 
             params = rutil.getParams();
@@ -29,7 +484,7 @@ describe("Rutil", function() {
     });
 
     xdescribe("setQueryStringParam", function() {
-        xit("should update query string param", function() {
+        it("should update query string param", function() {
             var uri = 'http://example.com?foo=bar&baz=qux';
             uri = rutil.setQueryStringParam(uri, 'foo', 'qux');
             console.log('uri:', uri);
@@ -57,7 +512,7 @@ describe("Rutil", function() {
     });
 
     xdescribe("generateRandomSring", function() {
-        xit("should be be able to generate a random 32 char string", function() {
+        it("should be be able to generate a random 32 char string", function() {
             var randomString = rutil.generateRandomString();
             console.log('Random string:', randomString);
 
@@ -231,6 +686,14 @@ describe("Rutil", function() {
 
     });
 
+    xdescribe("isValidCoordinate", function() {
+        it("should validate coordinate", function() {
+            expect(rutil.isValidCoordinate(41.1029592)).toBeTruthy();
+            expect(rutil.isValidCoordinate(-104.8049363)).toBeTruthy();
+            expect(rutil.isValidCoordinate('13')).toBeFalsy();
+        });
+    });
+
     xdescribe("addCommas", function() {
 
         it("should add commas", function() {
@@ -266,13 +729,13 @@ describe("Rutil", function() {
 
     xdescribe("isMobileDevice", function() {
 
-        xit("should check if is mobile device", function() {
+        it("should check if is mobile device", function() {
             var isMobileDevice = rutil.isMobileDevice();
             console.log(isMobileDevice);
             expect(isMobileDevice).toMatch(/(true|false)/);
         });
 
-        xit("should check if is mobile device ios", function() {
+        it("should check if is mobile device ios", function() {
             var isMobileDevice = rutil.isMobileDevice('ios');
             expect(isMobileDevice).toBeTruthy();
         });
@@ -282,7 +745,7 @@ describe("Rutil", function() {
             expect(isMobileDevice).toBeTruthy();
         });
 
-        xit("should check if is mobile device android", function() {
+        it("should check if is mobile device android", function() {
             var isMobileDevice = rutil.isMobileDevice('android');
             expect(isMobileDevice).toBeTruthy();
         });
@@ -339,7 +802,7 @@ describe("Rutil", function() {
 
     xdescribe("capitalize", function() {
 
-        xit("should capitalize string", function() {
+        it("should capitalize string", function() {
             expect(rutil.capitalize('foo')).toEqual('Foo');
         });
 
@@ -353,7 +816,7 @@ describe("Rutil", function() {
 
     xdescribe("pad", function() {
 
-        xit("should pad number", function() {
+        it("should pad number", function() {
             expect(rutil.pad(1)).toEqual(01);
             expect(rutil.pad(10, 2)).toEqual(0010);
         });
@@ -378,7 +841,7 @@ describe("Rutil", function() {
     });
 
     xdescribe("underscore", function() {
-        xit("underscore mixin", function() {
+        it("underscore mixin", function() {
             function foo() {
                return 'foo';
             }
@@ -394,7 +857,7 @@ describe("Rutil", function() {
             expect(_.isValidEmail('foo@bar.com')).toEqual(true);
         });
 
-        xit("mixin override", function() {
+        it("mixin override", function() {
 
             rutil.random = function() {
                 return true;

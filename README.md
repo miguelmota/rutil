@@ -311,6 +311,10 @@ rutil.sleep(50000);
 console.log('This will show after 5 seconds');
 ```
 
+##### More functions
+
+There's a ton more functions that I have not added to this readme yet. You can look at them in the source file or spec test file.
+
 # Extend _
 
 To extend the `_` when using libraries such as [underscore](http://underscorejs.org/) or [lodash](http://lodash.com/), pass in `rutil._()` to the underscore mixin function. Rutil functions will not override underscore functions if they already exist, unless you pass `rutil._(true)`
