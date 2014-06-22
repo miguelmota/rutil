@@ -1,4 +1,4 @@
-# rutil v0.0.4
+# rutil v0.0.6
 
 Random utilities
 
@@ -311,7 +311,7 @@ rutil.sleep(50000);
 console.log('This will show after 5 seconds');
 ```
 
-##### More functions
+# More functions
 
 There's a ton more functions that I have not added to this readme yet. You can look at them in the source file or spec test file.
 
@@ -324,6 +324,8 @@ _.mixin(rutil._()); // extend underscore
 
 _.isValidEmail('foo@bar.com'); // use rutil function
 ```
+
+Note that you can also use the `_r` global object instead of `rutil`.
 
 # Test
 
