@@ -1,7 +1,7 @@
 {
   "name": "rutil",
   "main": "rutil.js",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "homepage": "https://github.com/miguelmota/rutil",
   "description": "JavaScript utilities",
   "keywords": [
