@@ -814,6 +814,6 @@
             return rutil;
         });
     } else {
-        global.rutil = global._r = rutil;
+        global.rutil = global._u = rutil;
     }
 })(this);

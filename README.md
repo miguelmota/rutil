@@ -325,7 +325,7 @@ _.mixin(rutil._()); // extend underscore
 _.isValidEmail('foo@bar.com'); // use rutil function
 ```
 
-Note that you can also use the `_r` global object instead of `rutil`.
+Note that you can also use the `_u` global object instead of `rutil`.
 
 # Test
 
