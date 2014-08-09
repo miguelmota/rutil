@@ -112,7 +112,7 @@ describe("Rutil", function() {
         });
     });
 
-    xdescribe("clone", function() {
+    describe("clone", function() {
         it("should clone object", function() {
             var obj = {
                 foo: 'bar'
@@ -123,7 +123,7 @@ describe("Rutil", function() {
 
             delete obj['foo'];
 
-            expect(copy).toEqual({foo:'bar'});
+            expect(obj).toEqual({foo:'bar'});
         });
     });
 
@@ -134,42 +134,9 @@ describe("Rutil", function() {
                 qux: 'baz',
                 corge: 'quux'
             };
-
             expect(rutil.omit(obj, ['qux','corge'])).toEqual({foo:'bar'});
-            expect(rutil.omit(obj, 'qux')).toEqual({foo:'bar',corge:'quux'});
         });
     });
-
-    describe("rename", function() {
-        it("should rename properties", function() {
-            var obj = {
-                foo: 'bar',
-                qux: 'baz',
-                corge: 'quux'
-            };
-
-            var newNames = {
-                foo: 'goo',
-                qux: 'rux',
-                corge: 'dorge'
-            };
-
-            expect(rutil.rename(obj, newNames)).toEqual(
-                {
-                goo:'bar',
-                rux: 'baz' ,
-                dorge:'quux'
-                }
-            );
-        });
-    });
-
-    xdescribe("keys", function() {
-        it("should return object keys", function() {
-            expect(rutil.keys({a:'b',c:'d'})).toEqual(['a','c']);
-        });
-    });
-
 
     xdescribe("noop", function() {
         it("should return an empty function", function() {
@@ -269,8 +236,22 @@ describe("Rutil", function() {
 
     });
 
+    xdescribe("prop", function() {
+        it("should return a function that returns the object's value", function() {
 
-    xdescribe("idenitity", function() {
+            var o = {
+                foo: 'foq',
+                bar: 'baq'
+            };
+            var obj = rutil.prop(o);
+
+            expect(obj('foo')).toEqual('foq');
+            expect(obj('bar')).toEqual('baq');
+        });
+
+    });
+
+    xdescribe("idenity", function() {
         it("should return itself", function() {
             expect(rutil.identity({foo: 'bar'})).toEqual({foo: 'bar'});
         });
@@ -298,13 +279,7 @@ describe("Rutil", function() {
         it("should reduce array", function() {
             expect(rutil.reduce([1,2,3], function(acc, v, i) {
                 return acc += v;
-            }, 0)).toEqual(6);
-        });
-        it("should reduce object", function() {
-            expect(rutil.reduce({'a': 'z', 'b': 'y', 'c': 'x'}, function(acc, v, k) {
-                acc[v] = k;
-                return acc;
-            }, {})).toEqual({'z': 'a', 'y': 'b', 'x': 'c'});
+            })).toEqual(6);
         });
     });
 
@@ -401,15 +376,6 @@ describe("Rutil", function() {
             }
 
             expect(rutil.mapcat(col,fn)).toEqual('24');
-        });
-    });
-
-    describe("contains", function() {
-        it("should return true if value in array", function() {
-            expect(rutil.contains(['a','b'], 'a')).toBeTruthy();
-            expect(rutil.contains(['a','b'], 'q')).toBeFalsy();
-            expect(rutil.contains(['a','b','c'], ['a','c'])).toBeTruthy();
-            expect(rutil.contains(['a','b','c'], ['a','d'])).toBeFalsy();
         });
     });
 

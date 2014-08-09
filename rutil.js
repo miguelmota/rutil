@@ -5,6 +5,9 @@
 
         var rutil = {};
 
+        // TODO: organize by type
+        // TODO: be consistent with argument names
+
         /*
          * Objects
          */
@@ -57,6 +60,38 @@
             return false;
         }
 
+        function has(obj, prop) {
+            return (obj && obj[prop]);
+        }
+
+        function keys(obj) {
+            return Object.keys(obj);
+        }
+
+        function clone(obj) {
+            if (isEmpty(obj) || !isObject(obj)) return obj;
+            var temp = obj.constructor();
+                prop;
+
+            for (prop in obj) {
+                temp[prop] = clone(obj[prop]);
+            }
+
+            return temp;
+        }
+
+        function omit(obj, col) {
+            col = (isArray(col) ? col : [col]);
+            var o = {};
+            forOwn(obj, function(v,k) {
+                if (!contains(col,k)) {
+                    o[k] = v;
+                }
+            });
+
+            return o;
+        }
+
         function forOwn(obj, func) {
            var k;
            for (k in obj) {
@@ -64,6 +99,18 @@
                     func(obj[k], k);
                 }
            }
+        }
+
+        function rename(obj, newNames) {
+            return reduce(newNames, function(o, nu, old) {
+                if (has(obj, old)) {
+                    o[nu] = obj[old];
+                    return o;
+                } else {
+                    return o;
+                }
+                return omit.apply(null, construct(obj, keys(newNames)));
+            }, {});
         }
 
         function noop() {}
@@ -98,8 +145,41 @@
             return a;
         }
 
+        function butLast(col) {
+            return toArray(col).slice(0, -1);
+        }
+
         function isIndexed(data) {
             return isArray(data) || isString(data);
+        }
+
+        function cat() {
+            var args = toArray(arguments);
+            var head = first(args);
+            if (typeof head === 'number') head = ''+head;
+            if (isExisty(head)) {
+                return head.concat.apply(head, rest(args));
+            } else {
+                return [];
+            }
+        }
+
+        function construct(head, tail) {
+            return cat([head], toArray(tail));
+        }
+
+        function mapcat(col, fn) {
+            return cat.apply(null, map(col, fn));
+        }
+
+        function contains(col, v) {
+            if (isArray(v)) {
+                return every(v, function(u,i) {
+                    return contains(col,u);
+                });
+            } else {
+                return !!~col.indexOf(v);
+            }
         }
 
         function merge(obj1, obj2){
@@ -216,6 +296,10 @@
             };
         }
 
+        /**
+         * Functions
+         */
+
         function doWhen(cond, action) {
             if (isTruthy(cond)) {
                 return action();
@@ -229,6 +313,33 @@
                 var result = result(target, name);
                 return result;
             });
+        }
+
+        function interpose(col, inter) {
+            return butLast(mapcat(col ,function(e) {
+                return construct(e, [inter]);
+            }));
+        }
+
+        /*
+         * String
+         */
+
+        function seperateWords(str, char, titlecase) {
+            titlecase = typeof titlecase !== 'undefined' ? titlecase : true;
+                char || (char = '-_');
+                var reg = new RegExp('\(['+ char +']+(.)?\)', 'gi');
+                return str.replace(reg, function(m) {
+                    return [' ', (titlecase ? m[1].toUpperCase() : m[1])].join('');
+                });
+        }
+
+        function titleCase(str) {
+            var words = str.split(' ');
+            for (var i = 0; i < words.length; i++) {
+                words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+            }
+            return words.join(' ');
         }
 
         function createPixel(url, cb) {
@@ -535,8 +646,16 @@
             return ary.filter(fun);
         }
 
-        function reduce(ary, fun) {
-            return ary.reduce(fun);
+        function reduce(col, fn, initial) {
+            if (isObject(col)) {
+                var acc = initial;
+                forOwn(col, function(v,k,i) {
+                   acc = fn(acc, v, k, i);
+                });
+                return acc;
+            } else {
+                return col.reduce(fn, initial);
+            }
         }
 
         function preCondition(array, success, fail) {
@@ -715,6 +834,7 @@
         rutil.first = first;
         rutil.last = last;
         rutil.rest = rest;
+        rutil.butLast = butLast;
         rutil.isIndexed = isIndexed;
         rutil.reduce = reduce;
         rutil.map = map;
@@ -723,22 +843,36 @@
         rutil.every = every;
         rutil.size = size;
         rutil.toArray = toArray;
+        rutil.cat = cat;
+        rutil.construct = construct;
+        rutil.mapcat = mapcat;
+        rutil.contains = contains;
 
         // Number functions
         rutil.random = random;
         rutil.sum = sum;
         rutil.average = rutil.avg = avg;
 
+        // String functions
+        rutil.seperateWords = seperateWords;
+        rutil.titleCase = titleCase;
+
         // Object functions
         rutil.forOwn = forOwn;
         rutil.compactObject = compactObject;
         rutil.result = result;
         rutil.executeIfHasField = executeIfHasField;
+        rutil.has = has;
+        rutil.omit = omit;
+        rutil.clone = clone;
+        rutil.rename = rename;
+        rutil.keys = keys;
 
         // Function functions
         rutil.functor = functor;
         rutil.noop = noop;
         rutil.comparator = comparator;
+        rutil.interpose = interpose;
 
         // Helpers
         rutil.preCondition = rutil.preCond = preCondition;

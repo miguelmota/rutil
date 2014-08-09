@@ -1,6 +1,6 @@
-# rutil v0.0.6
+# rutil
 
-Random utilities
+A whole bunch of utilities. I don't recommend you include this in your project just yet since I'm still adding and modifying a lot of functions. Take a look at the source code and pick and choose what you need.
 
 # Install
 
@@ -314,6 +314,73 @@ console.log('This will show after 5 seconds');
 # More functions
 
 There's a ton more functions that I have not added to this readme yet. You can look at them in the source file or spec test file.
+
+Not documented yet, but can use:
+
+```
+isTruthy
+isFalsy
+isFunction
+functor
+preCondition
+addEvent
+prop
+textNode
+wrap
+append
+hasClass
+addClass
+removeclass
+flatten
+sum
+int
+string
+compactobject
+isEmpty
+forOwn
+isExisty
+isString
+isNumber
+isBoolean
+noop
+setAttributes
+isValidCoordinate
+nth
+isIndexed
+appendStylesheet
+isDateInRange
+htmlContents
+elementById
+remove
+createElement
+anchor
+image
+appendScript
+pred
+comparator
+doWhen
+result
+executeIfHasField
+average
+reduce
+map
+filter
+size
+some
+every
+identity
+complement
+toArray
+first
+rest
+last
+seperatewords
+titleCase
+cat
+construct
+mapcat
+butLast
+```
 
 # Extend _
 
