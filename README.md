@@ -1,6 +1,6 @@
 # (Deprecated)
 
-*These methods will be moved to individual modules that stand on their own.*
+**These methods will be moved to individual modules that stand on their own.**
 
 # rutil
 
