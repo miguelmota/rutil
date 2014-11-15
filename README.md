@@ -1,6 +1,10 @@
+# (Deprecated)
+
+*These methods will be moved to individual modules that stand on their own.*
+
 # rutil
 
-A whole bunch of utilities. I don't recommend you include this in your project just yet since I'm still adding and modifying a lot of functions. Take a look at the source code and pick and choose what you need.
+A whole bunch of utilities.
 
 # Install
 
